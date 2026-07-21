@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans), "Inter", "Roboto", "Outfit", sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  /* Midnight Slate Theme - Professional Enterprise Look */
+  --color-background: #09090B; /* Zinc 950 */
+  --color-foreground: #FAFAFA; /* Zinc 50 */
+
+  --color-card: #18181B; /* Zinc 900 */
+  --color-card-foreground: #FAFAFA;
+
+  --color-popover: #18181B;
+  --color-popover-foreground: #FAFAFA;
+
+  /* Highly professional indigo/slate accent */
+  --color-primary: #6366F1; /* Indigo 500 */
+  --color-primary-foreground: #FFFFFF;
+
+  --color-secondary: #27272A; /* Zinc 800 */
+  --color-secondary-foreground: #FAFAFA;
+
+  --color-muted: #27272A;
+  --color-muted-foreground: #A1A1AA; /* Zinc 400 */
+
+  --color-accent: #27272A;
+  --color-accent-foreground: #FAFAFA;
+
+  --color-destructive: #EF4444; /* Red 500 */
+  --color-destructive-foreground: #FFFFFF;
+
+  --color-success: #10B981; /* Emerald 500 */
+  --color-success-foreground: #FFFFFF;
+
+  --color-warning: #F59E0B; /* Amber 500 */
+  --color-warning-foreground: #FFFFFF;
+
+  --color-border: #27272A; /* Zinc 800 */
+  --color-input: #27272A;
+  --color-ring: #6366F1;
+
+  --radius-lg: 0.75rem;
+  --radius-md: 0.5rem;
+  --radius-sm: 0.25rem;
+}
+
+@utility glass {
+  background: rgba(24, 24, 27, 0.75); /* Zinc 900 with slight transparency */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@utility glass-panel {
+  background: #18181B; /* Solid premium card for enterprise feel */
+  border: 1px solid #27272A; /* Zinc 800 border */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-[#09090b]/60 backdrop-blur-2xl border border-white/5 shadow-2xl;
+  }
+  .glass-panel-heavy {
+    @apply bg-[#09090b]/80 backdrop-blur-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
+  }
+}
+
+@keyframes ambient-drift {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow: hidden; /* Lock the viewport for the spatial UI */
+    @apply antialiased;
+    /* Removed the overly generic neon gradients for a pure, sleek slate dark mode */
+    min-height: 100vh;
+  }
+
+  /* Refined scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #3F3F46; /* Zinc 700 */
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #52525B; /* Zinc 600 */
+  }
+}
