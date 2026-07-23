@@ -6,80 +6,47 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-geist-sans), "Inter", "Roboto", "Outfit", sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
+  --font-sans: var(--font-outfit), "Outfit", "Inter", sans-serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", monospace;
 
-  /* Midnight Slate Theme - Professional Enterprise Look */
-  --color-background: #09090B; /* Zinc 950 */
-  --color-foreground: #FAFAFA; /* Zinc 50 */
+  /* Outcrowd-inspired Deep Violet + Coral */
+  --color-background: #0A0118;
+  --color-foreground: #F4F0FB;
 
-  --color-card: #18181B; /* Zinc 900 */
-  --color-card-foreground: #FAFAFA;
+  --color-card: rgba(255, 255, 255, 0.03);
+  --color-card-foreground: #F4F0FB;
 
-  --color-popover: #18181B;
-  --color-popover-foreground: #FAFAFA;
+  --color-popover: #160C2E;
+  --color-popover-foreground: #F4F0FB;
 
-  /* Highly professional indigo/slate accent */
-  --color-primary: #6366F1; /* Indigo 500 */
+  --color-primary: #FF6B42;
   --color-primary-foreground: #FFFFFF;
 
-  --color-secondary: #27272A; /* Zinc 800 */
-  --color-secondary-foreground: #FAFAFA;
+  --color-secondary: #1E1233;
+  --color-secondary-foreground: #F4F0FB;
 
-  --color-muted: #27272A;
-  --color-muted-foreground: #A1A1AA; /* Zinc 400 */
+  --color-muted: #1E1233;
+  --color-muted-foreground: #8B7FA8;
 
-  --color-accent: #27272A;
-  --color-accent-foreground: #FAFAFA;
+  --color-accent: #7C5CFC;
+  --color-accent-foreground: #FFFFFF;
 
-  --color-destructive: #EF4444; /* Red 500 */
+  --color-destructive: #FF4757;
   --color-destructive-foreground: #FFFFFF;
 
-  --color-success: #10B981; /* Emerald 500 */
+  --color-success: #34D399;
   --color-success-foreground: #FFFFFF;
 
-  --color-warning: #F59E0B; /* Amber 500 */
-  --color-warning-foreground: #FFFFFF;
+  --color-warning: #FBBF24;
+  --color-warning-foreground: #000000;
 
-  --color-border: #27272A; /* Zinc 800 */
-  --color-input: #27272A;
-  --color-ring: #6366F1;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-input: #1E1233;
+  --color-ring: #7C5CFC;
 
-  --radius-lg: 0.75rem;
-  --radius-md: 0.5rem;
-  --radius-sm: 0.25rem;
-}
-
-@utility glass {
-  background: rgba(24, 24, 27, 0.75); /* Zinc 900 with slight transparency */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-@utility glass-panel {
-  background: #18181B; /* Solid premium card for enterprise feel */
-  border: 1px solid #27272A; /* Zinc 800 border */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-}
-
-@layer utilities {
-  .glass-panel {
-    @apply bg-[#09090b]/60 backdrop-blur-2xl border border-white/5 shadow-2xl;
-  }
-  .glass-panel-heavy {
-    @apply bg-[#09090b]/80 backdrop-blur-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
-  }
-}
-
-@keyframes ambient-drift {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.05); }
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
 }
 
 @layer base {
@@ -88,27 +55,81 @@
   }
   body {
     font-family: var(--font-sans);
-    background-color: var(--background);
-    color: var(--foreground);
-    overflow: hidden; /* Lock the viewport for the spatial UI */
+    background-color: #0A0118;
+    color: #F4F0FB;
     @apply antialiased;
-    /* Removed the overly generic neon gradients for a pure, sleek slate dark mode */
     min-height: 100vh;
   }
 
-  /* Refined scrollbar */
+  /* Ultra-thin scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: #3F3F46; /* Zinc 700 */
-    border-radius: 3px;
+    background: rgba(124, 92, 252, 0.3);
+    border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #52525B; /* Zinc 600 */
+    background: rgba(124, 92, 252, 0.5);
   }
+}
+
+/* ═══════════ GLASS UTILITIES ═══════════ */
+
+@layer utilities {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  .glass-panel-heavy {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ═══════════ KEYFRAMES ═══════════ */
+
+@keyframes ambient-drift {
+  0% { transform: translateX(0) translateY(0) rotate(0deg); }
+  33% { transform: translateX(15px) translateY(-10px) rotate(1deg); }
+  66% { transform: translateX(-10px) translateY(8px) rotate(-1deg); }
+  100% { transform: translateX(0) translateY(0) rotate(0deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.03); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

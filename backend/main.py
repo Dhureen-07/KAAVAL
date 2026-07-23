@@ -8,10 +8,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import datetime
 import time
 import re
-from ml_engine.router import route_query
-from ml_engine.executor import process_query
-from web_utils import perform_web_search
-
 from database import (
     init_db, 
     get_all_resources, 
@@ -29,7 +25,12 @@ from database import (
     delete_timeline_node,
     create_sos_alert,
     get_all_sos_alerts,
-    update_sos_status
+    update_sos_status,
+    create_case,
+    get_all_cases,
+    get_case_by_id,
+    save_case_dataset,
+    get_all_case_datasets
 )
 
 try:
@@ -55,7 +56,41 @@ HF_MODELS = [
     "mistralai/Mistral-7B-Instruct-v0.3"
 ]
 
-# --- DUCKDUCKGO FREE WEB SEARCH RETRIEVER (removed from main.py and added into backend/web_utilites(to train perfrom web_search model sepearetly)---
+# --- DUCKDUCKGO FREE WEB SEARCH RETRIEVER ---
+def perform_web_search(query_str, max_results=3):
+    """
+    100% Free Web Search fallback using DuckDuckGo HTML parser.
+    Requires ZERO API keys or paid subscriptions.
+    """
+    print(f"Executing Web Search Fallback for: '{query_str}'...")
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+    
+    encoded_query = urllib.parse.quote_plus(query_str)
+    url = f"https://html.duckduckgo.com/html/?q={encoded_query}"
+    
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=5) as response:
+            html = response.read().decode('utf-8', errors='ignore')
+            
+            # Simple regex to extract search snippet text
+            snippets = []
+            # Find result snippets in DuckDuckGo HTML
+            matches = re.findall(r'<a class="result__snippet[^>]*>(.*?)</a>', html, re.DOTALL)
+            for m in matches[:max_results]:
+                clean_text = re.sub(r'<[^>]+>', '', m).strip()
+                if clean_text:
+                    snippets.append(clean_text)
+                    
+            if snippets:
+                return snippets, None
+            else:
+                return [], "No web snippets parsed"
+    except Exception as e:
+        print(f"Web search error: {e}")
+        return [], str(e)
 
 # --- HUGGING FACE LLM INFERENCE ENGINE ---
 def query_huggingface_llm(prompt, system_instruction="You are KAAVAL AI, an expert Karnataka Police Intelligence Assistant."):
@@ -257,12 +292,29 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             vehicles = get_all_vehicles()
             self.wfile.write(json.dumps({"vehicles": vehicles}).encode('utf-8'))
+        elif self.path == '/api/cases':
+            self.send_response(200)
+            self._send_cors_headers()
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            cases = get_all_cases()
+            self.wfile.write(json.dumps({"cases": cases}).encode('utf-8'))
+        elif self.path == '/api/cases/datasets':
+            self.send_response(200)
+            self._send_cors_headers()
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            datasets = get_all_case_datasets()
+            self.wfile.write(json.dumps({"datasets": datasets}).encode('utf-8'))
         elif self.path.startswith('/api/timelines'):
             self.send_response(200)
             self._send_cors_headers()
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
-            timeline = get_case_timeline()
+            parsed = urllib.parse.urlparse(self.path)
+            query_params = urllib.parse.parse_qs(parsed.query)
+            case_id = query_params.get('case_id', [None])[0]
+            timeline = get_case_timeline(case_id)
             self.wfile.write(json.dumps({"timeline": timeline}).encode('utf-8'))
         elif self.path == '/api/sos/alert':
             self.send_response(200)
@@ -401,6 +453,40 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps({"success": True, "id": v_id}).encode('utf-8'))
 
+        elif self.path == '/api/cases':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data)
+            c_id = create_case(
+                data.get('case_id', f"CASE-{datetime.datetime.now().year}-{int(time.time())%1000:03d}"),
+                data.get('title', 'New Active Case'),
+                data.get('category', 'General Crime'),
+                data.get('priority', 'MEDIUM'),
+                data.get('status', 'OPEN'),
+                data.get('location', 'Bengaluru'),
+                data.get('assigned_officer', 'Inspector V. Rao'),
+                data.get('summary', '')
+            )
+            self.send_response(200)
+            self._send_cors_headers()
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({"success": True, "id": c_id, "case_id": data.get('case_id')}).encode('utf-8'))
+
+        elif self.path == '/api/cases/datasets':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data)
+            dataset_name = data.get('dataset_name', 'Case Evidence Dataset')
+            case_id = data.get('case_id', 'CASE-2026-089')
+            description = data.get('description', '')
+            ds_id = save_case_dataset(dataset_name, case_id, description)
+            self.send_response(200)
+            self._send_cors_headers()
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({"success": True, "id": ds_id, "message": "Dataset saved successfully and registered to RAG pool"}).encode('utf-8'))
+
         elif self.path == '/api/timelines':
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
@@ -438,306 +524,15 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps({"success": True, "alert_id": alert_id, "assigned_pcr": pcr}).encode('utf-8'))
 
-      
-         
-
         elif self.path == '/api/intelligence/query':
-
 
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
             data = json.loads(post_data)
-
             query = data.get('query', '')
 
-            print(f"\n[QUERY] Processing AI query: '{query}'")
-
-            routing_result = route_query(query)
-                        
-            
-            route = routing_result["route"]
-            ml_result = routing_result["ml_result"]
-            district_result = routing_result["district_result"]
-            sqlite_result = routing_result["sqlite_result"]
-            web_result = routing_result["web_result"]
-                        
-            
-            sources = []
-            context_str = ""
-            
-            if ml_result:
-                print("\n========== ML ENGINE ==========")
-                print(ml_result)
-                print("===============================\n")
-
-            
-            # Add ML evidence into the LLM context
-            if ml_result and ml_result.get("evidence"):
-
-                sources.append("KAAVAL ML Engine")
-
-                entities = ml_result.get("entities") or {}
-                evidence = ml_result.get("evidence") or {}
-
-                context_str += "=== ML CRIME ANALYSIS ===\n"
-
-                context_str += (
-                    f"Crime Type: {entities.get('crime')}\n"
-                    f"District: {entities.get('district')}\n"
-                    f"Year: {entities.get('year')}\n\n"
-                )
-
-                context_str += (
-                    f"Similar Records Found: {evidence.get('records_found',0)}\n"
-                )
-
-                context_str += (
-                    f"Years: {evidence.get('years',[])}\n"
-                )
-
-                context_str += (
-                    f"Months: {evidence.get('months',[])}\n\n"
-                )
-
-                context_str += "Top Similar Cases:\n"
-
-                for case in evidence.get("similar_cases", []):
-
-                    context_str += (
-                        f"- {case.get('MAJOR HEAD')} | "
-                        f"{case.get('MINOR HEAD')} | "
-                        f"{case.get('Month')} {case.get('Year')}\n"
-                    )
-
-                context_str += "\n"
-
-    # Existing code continues...
-            # =====================================================
-            # Step 1 & 2: SQLite + Web (only for ML / SQLITE / WEB)
-            # =====================================================
-
-            db_matches = []
-            web_snippets = []
-
-            if route in ["ML", "SQLITE", "WEB"]:
-
-                if route == "SQLITE":
-                    db_matches = sqlite_result["matches"] if sqlite_result and sqlite_result["found"] else []
-            
-
-                elif route in ["ML", "WEB"]:
-                    db_matches = search_resources(query, limit=4)
-
-                if db_matches:
-                    sources.append("SQLite Database (kaaval.db)")
-                    context_str += "LOCAL DATABASE RECORDS:\n"
-                    for res in db_matches:
-                        context_str += (
-                            f"- [{res['category']}] "
-                            f"{res['title']}: {res['content']}\n"
-                        )
-
-                is_general_query = (
-                    len(db_matches) < 2
-                    or any(
-                        w in query.lower()
-                        for w in [
-                            "latest",
-                            "news",
-                            "what is",
-                            "how to",
-                            "who is",
-                            "help",
-                            "contact",
-                            "number",
-                            "india",
-                            "law",
-                            "police",
-                        ]
-                    )
-                )
-
-                if is_general_query and web_result and web_result["found"]:
-
-                    web_snippets = web_result["results"]
-
-                    sources.append("DuckDuckGo Web Search")
-                    context_str += "\nLIVE WEB SEARCH RESULTS:\n"
-
-                    for idx, snip in enumerate(web_snippets, 1):
-                        context_str += f"Result {idx}: {snip}\n"
-
-            # Step 3: Query Hugging Face LLM or OpenRouter LLM
-            final_response = None
-            llm_source = None
-            
-            # Try Hugging Face first
-            if HF_TOKEN:
-                print("Querying Hugging Face LLM models...")
-                hf_prompt = f"Question: {query}\n\nContext Information:\n{context_str}"
-                final_response, llm_source = query_huggingface_llm(hf_prompt)
-                if final_response:
-                    sources.append(llm_source)
-                    
-            # Try OpenRouter if HF didn't handle it
-            if not final_response and OPENROUTER_API_KEY:
-                print("Querying OpenRouter LLM model...")
-                final_response, llm_source = query_openrouter(query, system_context=context_str)
-                if final_response:
-                    sources.append(llm_source)
-                    
-            # Fallback Synthesis if no LLM is available
-            if not final_response and route == "ML":
-                print("Synthesizing response using ML + SQLite + Web...")
-
-                sources.append("KAAVAL Local Synthesis Engine")
-
-                
-                entities = ml_result.get("entities") if ml_result else {}
-                if entities is None:
-                    entities = {}
-
-                evidence = ml_result.get("evidence") if ml_result else None
-
-
-                final_response = f"## Summary\n"
-                final_response += f"Crime intelligence generated for **'{query}'**.\n\n"
-
-                # ==========================
-                # ML ENGINE (PRIMARY)
-                # ==========================
-                final_response += "## 🧠 ML Crime Analysis\n\n"
-
-                final_response += f"- **Crime Type:** {entities.get('crime') or 'Not detected'}\n"
-                final_response += f"- **District:** {entities.get('district') or 'Not detected'}\n"
-                final_response += f"- **Year:** {entities.get('year') or 'Not specified'}\n\n"
-
-                if evidence:
-
-                    final_response += f"**Similar Cases Found:** {evidence.get('records_found', 0)}\n\n"
-
-                    if evidence.get("years"):
-                        final_response += f"**Years Observed:** {', '.join(map(str, evidence['years']))}\n\n"
-
-                    if evidence.get("months"):
-                        final_response += f"**Months Observed:** {', '.join(evidence['months'])}\n\n"
-
-                    if evidence.get("similar_cases"):
-                        final_response += "### Top Similar Cases\n"
-
-                        for i, case in enumerate(evidence["similar_cases"], start=1):
-                            final_response += (
-                                f"\n{i}. **{case.get('MINOR HEAD')}**\n"
-                                f"   - Major Head: {case.get('MAJOR HEAD')}\n"
-                                f"   - Month: {case.get('Month')}\n"
-                                f"   - Year: {case.get('Year')}\n"
-                            )
-
-                else:
-                    final_response += "**Similar Cases Found:** 0\n\n"
-                    final_response += "_No similar cases were found in the local crime datasets._\n"
-                    
-                # ==========================
-                # SQLITE
-                # ==========================
-                if db_matches:
-                    final_response += "\n\n## 🗄️ SQLite Database Matches\n"
-
-                    for m in db_matches:
-                        final_response += (
-                            f"- **{m['title']}**: {m['content']}\n"
-                        )
-
-                # ==========================
-                # WEB
-                # ==========================
-                if 'web_snippets' in locals() and web_snippets:
-                    final_response += "\n\n## 🌐 Live Web Intelligence\n"
-
-                    for s in web_snippets:
-                        final_response += f"- {s}\n"
-
-                final_response += (
-                    "\n\n---\n"
-                    "**Sources:** KAAVAL ML Engine, SQLite Knowledge Base"
-                )
-
-                if 'web_snippets' in locals() and web_snippets:
-                    final_response += ", DuckDuckGo Search"
-
-                final_response += "."
-
-            elif not final_response and route == "DISTRICT":
-
-                if district_result["found"]:
-
-                    final_response = (
-                        "## District Statistics\n\n"
-                        f"**District:** {district_result['district']}\n"
-                        f"**Total Cases:** {district_result['total_cases']}\n\n"
-                        "### Top Crime Categories\n"
-                    )
-
-                    for crime, count in district_result["top_crimes"].items():
-                        final_response += f"- {crime}: {count}\n"
-
-                else:
-                    final_response = district_result["message"]
-
-            elif not final_response and route == "WEB":
-
-                final_response = "## 🌐 Live Web Intelligence\n\n"
-
-                if web_result and web_result["found"]:
-
-                    final_response += (
-                        f"Showing the latest web information for **'{query}'**.\n\n"
-                    )
-
-                    for i, result in enumerate(web_result["results"], start=1):
-                        final_response += f"**{i}.** {result['snippet']}\n\n"
-
-                    final_response += (
-                        "\n\n---\n"
-                        "**Source:** DuckDuckGo Web Search"
-                    )
-
-
-                else:
-                    final_response += "No relevant web information could be retrieved."           
-                
-            elif not final_response and route == "SQLITE":
-
-                if sqlite_result["found"]:
-
-                    final_response = "## IPC / BNS Knowledge Base\n\n"
-
-                    for match in sqlite_result["matches"]:
-                        final_response += (
-                            f"### {match['title']}\n"
-                            f"**Category:** {match['category']}\n\n"
-                            f"{match['content']}\n\n"
-                            f"**Source:** {match['source']}\n\n"
-                        )
-
-                else:
-                    final_response = "No matching IPC/BNS records were found."
-
-            elif not final_response:
-                final_response = "Please ask a crime or law related question."
-
-
-            confidence = min(0.99, max(0.85, 0.88 + (len(context_str) / 2000.0)))
-            
-            # Save to chat history log in SQLite
-            save_chat_log(query, final_response, sources)
-
-            response_data = {
-                "response": final_response,
-                "confidence_score": confidence,
-                "sources": sources,
-                "timestamp": datetime.datetime.now().isoformat()
-            }
+            from router import route_query
+            response_data = route_query(query)
 
             self.send_response(200)
             self._send_cors_headers()

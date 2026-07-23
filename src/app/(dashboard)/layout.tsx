@@ -4,42 +4,37 @@ import { OfflineIndicator } from "@/components/layout/OfflineIndicator"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="fixed inset-0 w-screen h-screen bg-background overflow-hidden">
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden" style={{ background: "#0A0118" }}>
       
-      {/* The Spatial Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/cubes.png')] opacity-10 animate-[ambient-drift_120s_linear_infinite]" />
+      {/* Ambient liquid background */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
+        {/* Mesh gradient orbs */}
+        <div
+          className="absolute -top-[15%] -left-[10%] w-[50vw] h-[50vw] max-w-[650px] max-h-[650px] rounded-full blur-[160px]"
+          style={{ background: "rgba(124,92,252,0.06)", animation: "ambient-drift 20s ease-in-out infinite" }}
+        />
+        <div
+          className="absolute -bottom-[15%] -right-[10%] w-[45vw] h-[45vw] max-w-[550px] max-h-[550px] rounded-full blur-[140px]"
+          style={{ background: "rgba(255,107,66,0.04)", animation: "ambient-drift 25s ease-in-out infinite reverse" }}
+        />
+        <div
+          className="absolute top-1/3 right-1/4 w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] rounded-full blur-[180px]"
+          style={{ background: "rgba(124,92,252,0.03)" }}
+        />
         
-        {/* Massive atmospheric glows */}
-        <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-primary/10 blur-[150px] animate-[pulse-glow_15s_ease-in-out_infinite] mix-blend-screen pointer-events-none" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-secondary/10 blur-[150px] animate-[pulse-glow_10s_ease-in-out_infinite_reverse] mix-blend-screen pointer-events-none" />
-        
-        {/* Vignette to darken the edges heavily */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background opacity-90 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background opacity-90 pointer-events-none" />
+        {/* Edge vignette */}
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, #0A0118 100%)" }} />
       </div>
       
-      {/* Floating Navigation Layers */}
       <TopNav />
       <OmniDock />
       <OfflineIndicator />
 
-      {/* 
-        Strict CSS Grid Layout 
-        Row 1: Top gap for TopNav (120px)
-        Row 2: Scrollable content area (fills remaining space)
-        Row 3: Bottom gap for OmniDock (100px)
-        This physically prevents the content from overlapping the navigation.
-      */}
-      <main className="relative z-10 w-full h-full max-w-[1600px] mx-auto grid grid-rows-[120px_minmax(0,1fr)_100px] overflow-hidden">
-        
-        {/* The content wrapper sits exactly in Row 2 */}
-        <div className="row-start-2 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none px-4 sm:px-6 lg:px-12 animate-in fade-in zoom-in-95 slide-in-from-bottom-8 duration-700 ease-out">
+      <main className="relative z-10 w-full h-full max-w-[1440px] mx-auto grid grid-rows-[100px_minmax(0,1fr)_80px] overflow-hidden">
+        <div className="row-start-2 w-full h-full overflow-y-auto overflow-x-hidden scrollbar-none px-4 sm:px-6 lg:px-10">
           {children}
         </div>
-        
       </main>
-      
     </div>
   )
 }
