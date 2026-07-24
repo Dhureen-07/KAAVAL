@@ -45,12 +45,26 @@ def route_query(query: str):
             else:
                 final_response_text = generate_markdown_response(query, "sqlite_search", [], source)
         else:
-            sources.append(source)
-            final_response_text = generate_markdown_response(query, intent.value, db_matches, source)
+            # We found DB matches! Let's use the ML Engine to synthesize a human-readable answer (RAG)
+            context_str = "LOCAL DATABASE RECORDS:\n"
+            for res in db_matches:
+                context_str += f"- [{res['category']}] {res['title']}: {res['content']}\n"
+                
+            print(f"[ROUTER] Found {len(db_matches)} SQLite records. Sending to ML Engine for synthesis...")
+            ml_response, ml_source = execute_ml_query(query, context_str)
+            
+            if ml_response:
+                sources.append(ml_source)
+                sources.append(source)
+                final_response_text = ml_response
+            else:
+                # Fallback if ML is down
+                sources.append(source)
+                final_response_text = generate_markdown_response(query, intent.value, db_matches, source)
             
     elif intent == QueryIntent.ML_INFERENCE:
-        # Pre-fetch some DB context just in case
-        db_matches, _ = execute_sqlite_query(query, limit=2)
+        # Pre-fetch some DB context just in case (Increased limit to 15 for better context)
+        db_matches, _ = execute_sqlite_query(query, limit=15)
         if db_matches:
             context_str += "LOCAL DATABASE RECORDS:\n"
             for res in db_matches:

@@ -22,9 +22,14 @@ def generate_markdown_response(query: str, intent: str, results: any, source: st
             # ML engine returns the raw generated string, which usually has its own markdown
             return results
         else:
-            response += "### 🌐 Synthesized Intelligence:\n"
+            response += "### 🌐 Synthesized Intelligence (Fallback Mode):\n"
             for item in results:
-                response += f"* {item}\n"
+                if isinstance(item, dict) and 'title' in item:
+                    response += f"* **{item['title']}**: {item.get('content', '')}\n"
+                elif isinstance(item, dict):
+                    response += f"* {item}\n"
+                else:
+                    response += f"* {item}\n"
                 
     response += f"\n\n## Additional Intelligence & Sources\nVerified cross-references matched from **{source}**."
     return response

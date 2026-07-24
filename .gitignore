@@ -45,3 +45,6 @@ backend/*.db
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# datasets
+backend/data/*.csv
