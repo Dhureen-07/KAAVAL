@@ -1,3 +1,24 @@
+###CHANGES
+
+## Modified Files
+- **backend/router.py**: Reimplemented clean orchestration logic, added proper imports, session memory handling, passed conversation history to ML engine, fixed return statement, and ensured graceful fallback flow.
+- **backend/engines/ml_engine.py**: Added global `SESSION_MEMORY` for simple session tracking and updated imports.
+- **backend/requirements.txt**: Added required packages `pandas`, `plotly`, `langchain`, and `langchain-openai` (with versions) to support data handling, graph generation, and LLM orchestration.
+
+## New Packages Added
+- `pandas==2.2.2` – Dataframe manipulation for chart generation.
+- `plotly==5.22.0` – Interactive chart creation.
+- `langchain==0.2.0` – Core LLM orchestration utilities.
+- `langchain-openai==0.1.5` – OpenAI compatible provider for OpenRouter, Groq, and HuggingFace backends.
+
+These changes enable:
+- Primary use of OpenRouter `/free` model with fallback to Groq `/free` and HuggingFace free models, reducing 429 errors.
+- Structured JSON output with proper handling of textual, numeric, tabular, and chart data.
+- Automatic generation of Plotly charts when a query requests visualisation.
+- Simple in‑memory session memory (last 10 turns) to maintain conversational context.
+- Updated documentation and dependency list for production deployment.
+
+
 # 🛡️ KAAVAL AI: Advanced Public Safety & Emergency Intelligence Platform
 
 > **KAAVAL** (meaning "Guard" or "Protection" in Kannada) is a next-generation AI-powered intelligence and public safety platform. Designed for law enforcement officers and emergency personnel, KAAVAL accelerates incident response by providing real-time document scanning (OCR), context translation, verified crime record querying, and automated First Information Report (FIR) drafting.
@@ -165,13 +186,13 @@ REASONING_MODEL="google/gemma-4-31b-it:free"
 
 ## 🧪 API Reference & Testing
 
-You can test the end-to-end pipeline using the Next.js UI:
+You can test the end-to‑to‑end pipeline using the Next.js UI:
 
 1. **Access the Dashboard:** Navigate to `http://localhost:3000/ocr-translation`.
 2. **Load Sample:** Click **"Load Sample Incident Report"** to populate a test document template.
-3. **Run OCR:** Click **"Run OCR Text Extraction"**. If `HF_TOKEN` is set, it will run live inference; otherwise, it will return a high-fidelity simulation.
+3. **Run OCR:** Click **"Run OCR Text Extraction"**. If `HF_TOKEN` is set, it will run live inference; otherwise, it will return a high‑fidelity simulation.
 4. **Translate:** Click **"Translate Text Context"** to see the OCR results converted to Kannada.
-5. **Intelligence Handoff:** Click **"Import OCR to Assistant"** to seamlessly transfer the extracted text to the Central AI Assistant for further querying, cross-referencing, or FIR generation.
+5. **Intelligence Handoff:** Click **"Import OCR to Assistant"** to seamlessly transfer the extracted text to the Central AI Assistant for further querying, cross‑referencing, or FIR generation.
 
 ---
 
@@ -182,4 +203,5 @@ You can test the end-to-end pipeline using the Next.js UI:
 - **Simulation Mode Active:** If you see "(Simulation Mode)" appended to your API responses, the backend has gracefully fallen back because an API key was not found or a rate limit was reached. Check your `.env` variables.
 
 ---
+
 *Built for KAAVAL AI.*

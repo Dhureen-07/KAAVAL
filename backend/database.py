@@ -45,12 +45,17 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS chat_logs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id TEXT DEFAULT 'default',
             query TEXT NOT NULL,
             response TEXT NOT NULL,
             sources TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    cursor.execute("PRAGMA table_info(chat_logs)")
+    chat_log_columns = [row[1] for row in cursor.fetchall()]
+    if "session_id" not in chat_log_columns:
+        cursor.execute("ALTER TABLE chat_logs ADD COLUMN session_id TEXT DEFAULT 'default'")
 
     # 4. Vehicles ANPR database table
     cursor.execute('''
@@ -332,15 +337,55 @@ def get_recent_firs(limit=10):
     conn.close()
     return rows
 
-def save_chat_log(query, response, sources):
+def serialize(value):
+    """Convert any Python object into something SQLite can store."""
+    if value is None:
+        return None
+
+    if isinstance(value, str):
+        return value
+
+    return json.dumps(value, ensure_ascii=False, default=str)
+
+
+def save_chat_log(query, response, sources, session_id="default"):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        INSERT INTO chat_logs
+        (session_id, query, response, sources)
+        VALUES (?, ?, ?, ?)
+        """,
+        (
+            session_id or "default",
+            serialize(query),
+            serialize(response),
+            serialize(sources),
+        )
+    )
+
+    conn.commit()
+    conn.close()
+
+def get_recent_chat_logs(session_id="default", limit=6):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO chat_logs (query, response, sources) VALUES (?, ?, ?)",
-        (query, response, json.dumps(sources) if isinstance(sources, list) else str(sources))
+        """
+        SELECT query, response
+        FROM chat_logs
+        WHERE session_id = ?
+        ORDER BY id DESC
+        LIMIT ?
+        """,
+        (session_id or "default", limit)
     )
-    conn.commit()
+    rows = [dict(r) for r in cursor.fetchall()]
     conn.close()
+    rows.reverse()
+    return rows
 
 # --- VEHICLES ANPR HELPER FUNCTIONS ---
 def get_vehicle_by_plate(plate_num):
@@ -516,5 +561,4 @@ def update_sos_status(alert_id, status):
 if __name__ == '__main__':
     init_db()
     print("Database test complete. Total resources in DB:", len(get_all_resources()))
-
 
