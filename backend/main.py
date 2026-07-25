@@ -48,11 +48,10 @@ OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 REASONING_MODEL = os.getenv("REASONING_MODEL", "google/gemma-4-31b-it:free")
 OPENROUTER_FREE_MODELS = [
     REASONING_MODEL,
-    "google/gemini-2.0-flash-lite-preview-02-05:free",
-    "meta-llama/llama-3.2-3b-instruct:free",
-    "meta-llama/llama-3.1-8b-instruct:free",
-    "google/gemma-2-9b-it:free",
-    "mistralai/mistral-7b-instruct:free"
+    "google/gemma-4-26b-a4b-it:free",
+    "openai/gpt-oss-20b:free",
+    "nvidia/nemotron-3-nano-30b-a3b:free",
+    "openrouter/free"
 ]
 
 HF_TOKEN = os.getenv("HF_TOKEN", "")

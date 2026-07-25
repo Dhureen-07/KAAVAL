@@ -29,7 +29,7 @@ GROQ_FREE_MODEL = os.getenv("GROQ_FREE_MODEL", "groq/auto:free")
 
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 HF_API_URL = "https://router.huggingface.co/v1"
-HUGGINGFACE_FREE_MODEL = os.getenv("HUGGINGFACE_FREE_MODEL", "huggingface/auto:free")
+HUGGINGFACE_FREE_MODEL = os.getenv("HUGGINGFACE_FREE_MODEL", "meta-llama/Llama-3.2-3B-Instruct")
 
 SYSTEM_PROMPT = """
 You are KAAVAL AI, the official Intelligence Assistant for Karnataka public-safety operations.
@@ -91,10 +91,10 @@ def _build_llm_clients() -> List[Tuple[str, ChatOpenAI]]:
     if OPENROUTER_API_KEY:
         openrouter_models = [
             os.getenv("OPENROUTER_FREE_MODEL", "google/gemma-4-31b-it:free"),
-            "google/gemini-2.0-flash-lite-preview-02-05:free",
-            "meta-llama/llama-3.2-3b-instruct:free",
-            "meta-llama/llama-3.1-8b-instruct:free",
-            "deepseek/deepseek-chat:free"
+            "google/gemma-4-26b-a4b-it:free",
+            "openai/gpt-oss-20b:free",
+            "nvidia/nemotron-3-nano-30b-a3b:free",
+            "openrouter/free"
         ]
         
         # Deduplicate while preserving order
