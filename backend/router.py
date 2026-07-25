@@ -1,6 +1,6 @@
 import datetime
 from typing import List, Dict
-
+import numpy as np
 from query_classifier import classify_query, QueryIntent
 from engines.ml_engine import execute_ml_query, perform_web_search
 from engines.district_engine import execute_district_query
@@ -11,6 +11,23 @@ from database import save_chat_log
 # Simple in-memory session history
 SESSION_MEMORY: List[Dict[str, str]] = []
 
+def make_json_safe(obj):
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+
+    if isinstance(obj, np.integer):
+        return int(obj)
+
+    if isinstance(obj, np.floating):
+        return float(obj)
+
+    if isinstance(obj, dict):
+        return {k: make_json_safe(v) for k, v in obj.items()}
+
+    if isinstance(obj, list):
+        return [make_json_safe(v) for v in obj]
+
+    return obj
 
 def route_query(query: str) -> Dict:
     print(f"\n[ROUTER] Processing AI query: '{query}'")
@@ -209,7 +226,7 @@ def route_query(query: str) -> Dict:
         payload["chart"] = final_response.get("chart")
         payload["warnings"] = final_response.get("warnings", [])
 
-    return payload
+    return make_json_safe(payload)
 
 
 
