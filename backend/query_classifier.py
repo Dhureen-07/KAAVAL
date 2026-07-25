@@ -5,6 +5,7 @@ class QueryIntent(Enum):
     DISTRICT_STATS = "district_stats"
     SQLITE_SEARCH = "sqlite_search"
     ML_INFERENCE = "ml_inference"
+    WEB_SEARCH = "web_search"
 
 def classify_query(query: str) -> QueryIntent:
     """
@@ -21,6 +22,8 @@ def classify_query(query: str) -> QueryIntent:
 
     # 2. Check for general ML or web-search heavy queries
     ml_keywords = ["latest", "news", "what is", "how to", "who is", "help", "contact", "number", "india", "law", "police", "explain", "summarize"]
+    if any(re.search(rf"\b{kw}\b", query_lower) for kw in ["latest", "news", "today", "yesterday"]):
+        return QueryIntent.WEB_SEARCH
     if any(re.search(rf"\b{kw}\b", query_lower) for kw in ml_keywords) or len(query_lower.split()) > 10:
         return QueryIntent.ML_INFERENCE
         

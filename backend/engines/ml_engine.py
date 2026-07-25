@@ -89,18 +89,31 @@ def _build_llm_clients() -> List[Tuple[str, ChatOpenAI]]:
     clients: List[Tuple[str, ChatOpenAI]] = []
 
     if OPENROUTER_API_KEY:
-        clients.append(
-            (
-                "OpenRouter /free",
-                ChatOpenAI(
-                    api_key=OPENROUTER_API_KEY,
-                    base_url=OPENROUTER_API_URL,
-                    model=OPENROUTER_FREE_MODEL,
-                    temperature=0.2,
-                    default_headers={"HTTP-Referer": "http://localhost:3000", "X-Title": "KAAVAL AI"},
-                ),
+        openrouter_models = [
+            os.getenv("OPENROUTER_FREE_MODEL", "google/gemma-4-31b-it:free"),
+            "google/gemini-2.0-flash-lite-preview-02-05:free",
+            "meta-llama/llama-3.2-3b-instruct:free",
+            "meta-llama/llama-3.1-8b-instruct:free",
+            "deepseek/deepseek-chat:free"
+        ]
+        
+        # Deduplicate while preserving order
+        seen = set()
+        unique_models = [x for x in openrouter_models if not (x in seen or seen.add(x))]
+        
+        for model in unique_models:
+            clients.append(
+                (
+                    f"OpenRouter ({model})",
+                    ChatOpenAI(
+                        api_key=OPENROUTER_API_KEY,
+                        base_url=OPENROUTER_API_URL,
+                        model=model,
+                        temperature=0.2,
+                        default_headers={"HTTP-Referer": "http://localhost:3000", "X-Title": "KAAVAL AI"},
+                    ),
+                )
             )
-        )
 
     if GROQ_API_KEY:
         clients.append(

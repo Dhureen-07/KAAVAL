@@ -119,25 +119,27 @@ def route_query(query: str) -> Dict:
                 )
 
     # ---------------- ML ----------------
-    elif intent == QueryIntent.ML_INFERENCE:
+    elif intent in (QueryIntent.ML_INFERENCE, QueryIntent.WEB_SEARCH):
 
-        db_matches, _ = execute_sqlite_query(query, limit=15)
-
-        if db_matches:
-
-            context_str += "LOCAL DATABASE RECORDS:\n"
-
-            for res in db_matches:
-
-                context_str += (
-                    f"- [{res['category']}] "
-                    f"{res['title']}: "
-                    f"{res['content']}\n"
-                )
+        db_matches = []
+        if intent == QueryIntent.ML_INFERENCE:
+            db_matches, _ = execute_sqlite_query(query, limit=15)
+    
+            if db_matches:
+    
+                context_str += "LOCAL DATABASE RECORDS:\n"
+    
+                for res in db_matches:
+    
+                    context_str += (
+                        f"- [{res['category']}] "
+                        f"{res['title']}: "
+                        f"{res['content']}\n"
+                    )
 
         web_snippets, web_err = perform_web_search(
             query,
-            max_results=2
+            max_results=4 if intent == QueryIntent.WEB_SEARCH else 2
         )
 
         if web_snippets:

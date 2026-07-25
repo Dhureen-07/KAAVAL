@@ -45,7 +45,15 @@ init_db()
 # --- CONFIGURATION ---
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-REASONING_MODEL = os.getenv("REASONING_MODEL", "meta-llama/llama-3.2-3b-instruct:free")
+REASONING_MODEL = os.getenv("REASONING_MODEL", "google/gemma-4-31b-it:free")
+OPENROUTER_FREE_MODELS = [
+    REASONING_MODEL,
+    "google/gemini-2.0-flash-lite-preview-02-05:free",
+    "meta-llama/llama-3.2-3b-instruct:free",
+    "meta-llama/llama-3.1-8b-instruct:free",
+    "google/gemma-2-9b-it:free",
+    "mistralai/mistral-7b-instruct:free"
+]
 
 HF_TOKEN = os.getenv("HF_TOKEN", "")
 
@@ -148,7 +156,6 @@ def query_openrouter(prompt, is_fir=False, system_context=""):
         sys_prompt += f"\n\n[ADDITIONAL CONTEXT & SEARCH RESULTS]\n{system_context}"
         
     data = {
-        "model": REASONING_MODEL,
         "messages": [
             {"role": "system", "content": sys_prompt},
             {"role": "user", "content": prompt}
@@ -156,17 +163,20 @@ def query_openrouter(prompt, is_fir=False, system_context=""):
         "temperature": 0.2 if is_fir else 0.3
     }
     
-    try:
-        req = urllib.request.Request(OPENROUTER_API_URL, data=json.dumps(data).encode('utf-8'), headers=headers, method='POST')
-        with urllib.request.urlopen(req, timeout=12) as response:
-            result = json.loads(response.read().decode('utf-8'))
-            if 'choices' in result and len(result['choices']) > 0:
-                text_response = result['choices'][0]['message']['content']
-                return text_response, "OpenRouter LLM Engine"
-    except Exception as e:
-        print(f"OpenRouter API Error: {e}")
-        
-    return None, "OpenRouter API unavailable"
+    for model in OPENROUTER_FREE_MODELS:
+        data["model"] = model
+        try:
+            req = urllib.request.Request(OPENROUTER_API_URL, data=json.dumps(data).encode('utf-8'), headers=headers, method='POST')
+            with urllib.request.urlopen(req, timeout=12) as response:
+                result = json.loads(response.read().decode('utf-8'))
+                if 'choices' in result and len(result['choices']) > 0:
+                    text_response = result['choices'][0]['message']['content']
+                    return text_response, f"OpenRouter ({model})"
+        except Exception as e:
+            print(f"OpenRouter API Error with model {model}: {e}")
+            continue
+            
+    return None, "OpenRouter API unavailable (All fallback models failed)"
 
 # --- OCR & TRANSLATION ---
 def perform_ocr(image_base64):
