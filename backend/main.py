@@ -680,7 +680,8 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.send_response(404)
         self.end_headers()
 
-def run(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
+def run(server_class=HTTPServer, handler_class=RequestHandler):
+    port = int(os.environ.get('PORT', 8000))
     server_address = ('0.0.0.0', port)
     httpd = server_class(server_address, handler_class)
     print(f'Starting KAAVAL AI Backend with SQLite Database, Hugging Face LLMs & DuckDuckGo Search Fallback on port {port}...')
