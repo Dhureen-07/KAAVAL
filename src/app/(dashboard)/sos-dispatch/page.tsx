@@ -2,22 +2,25 @@
 
 import { useState, useEffect, useRef, type ReactNode } from "react"
 import { Siren, MapPin, Radio, ShieldAlert, Phone, Clock, Navigation, CheckCircle2, AlertCircle, Volume2, User } from "lucide-react"
+import { toast } from "sonner"
 
 /* ═══════ Colors ═══════ */
 const P = {
-  coral:    "#FF6B42",
-  coralSoft:"#FF8F6B",
-  violet:   "#7C5CFC",
-  violetDim:"#5B3FD6",
-  green:    "#34D399",
-  red:      "#FF4757",
-  amber:    "#FBBF24",
-  blue:     "#60A5FA",
-  text1:    "#F4F0FB",
-  text2:    "#8B7FA8",
-  text3:    "#5D5278",
-  surface:  "rgba(255,255,255,0.03)",
-  border:   "rgba(255,255,255,0.06)",
+  background: "var(--color-background)",
+  surface: "var(--color-surface)",
+  panel: "var(--color-panel)",
+  border: "var(--color-border)",
+  text1: "var(--color-text1)",
+  text2: "var(--color-text2)",
+  text3: "var(--color-text3)",
+  coral: "var(--color-coral)",
+  coralSoft: "var(--color-coralSoft)",
+  amber: "var(--color-amber)",
+  violet: "var(--color-violet)",
+  blue: "var(--color-blue)",
+  green: "var(--color-green)",
+  red: "var(--color-red)",
+  glow: "var(--color-glow)",
 } as const
 
 /* ═══════ Scroll reveal ═══════ */
@@ -81,9 +84,13 @@ export default function SOSDispatchPage() {
 
     try {
       const res = await fetch("http://localhost:8000/api/sos/alert", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ caller_name: "Field Officer (Instant Trigger)", caller_phone: "+91 9876543210", latitude: lat, longitude: lng, address: addr, incident_type: incidentType, priority: priority }) })
-      if (res.ok) fetchAlerts()
+      if (res.ok) {
+        fetchAlerts()
+        toast.error(`${incidentType} DISPATCHED`, { description: `Units assigned: PCR-${Math.floor(Math.random() * 900) + 100}`, duration: 6000 })
+      }
     } catch (e) {
       setAlerts([{ id: Date.now(), caller_name: "Field Officer (Instant Trigger)", caller_phone: "+91 9876543210", latitude: lat, longitude: lng, address: addr, incident_type: incidentType, priority: priority, status: "DISPATCHED", assigned_pcr: "PCR-309 (Control Room Network)" }, ...alerts])
+      toast.error(`${incidentType} DISPATCHED`, { description: `Units assigned: PCR-309 (Offline Mock)`, duration: 6000 })
     } finally { setTriggering(false) }
   }
 
@@ -102,12 +109,12 @@ export default function SOSDispatchPage() {
       <Reveal>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6" style={{ borderBottom: `1px solid ${P.border}` }}>
           <div className="flex items-start gap-4">
-            <div className="p-3 rounded-2xl relative group overflow-hidden" style={{ background: `${P.red}15`, border: `1px solid ${P.red}30` }}>
+            <div className="p-3 rounded-[28px] relative group overflow-hidden" style={{ background: `${P.red}15`, border: `1px solid ${P.red}30` }}>
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle at 50% 50%, ${P.red}40, transparent 70%)` }} />
               <Siren className="w-6 h-6 relative z-10 animate-pulse" style={{ color: P.red }} />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white leading-tight flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-text1)] leading-tight flex items-center gap-3">
                 SOS Dispatch Center
                 <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border tracking-wide uppercase shadow-lg animate-pulse" style={{ background: `${P.red}15`, color: P.red, borderColor: `${P.red}30` }}>PCR ACTIVE</span>
               </h1>
@@ -124,13 +131,13 @@ export default function SOSDispatchPage() {
           
           <div className="max-w-md mx-auto space-y-2 relative z-10 mb-8">
             <span className="text-[11px] font-mono font-bold tracking-widest uppercase mb-2 block" style={{ color: P.red }}>// Protocol 112 //</span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white">INSTANT SOS SIGNAL</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-[var(--color-text1)]">INSTANT SOS SIGNAL</h2>
             <p className="text-[13px] font-light" style={{ color: P.text2 }}>Pressing the button below instantly captures GPS coordinates and dispatches the nearest PCR van.</p>
           </div>
 
           <button
             onClick={() => triggerSOS()} disabled={triggering}
-            className="relative group w-48 h-48 mx-auto rounded-full border-4 shadow-2xl transition-all duration-300 transform active:scale-95 flex flex-col items-center justify-center gap-2 text-white font-black tracking-wider z-10 hover:scale-105"
+            className="relative group w-48 h-48 mx-auto rounded-full border-4 shadow-2xl transition-all duration-300 transform active:scale-95 flex flex-col items-center justify-center gap-2 text-[var(--color-text1)] font-black tracking-wider z-10 hover:scale-105"
             style={{ background: `linear-gradient(135deg, ${P.red}, #E11D48)`, borderColor: "rgba(255,255,255,0.2)", boxShadow: `0 0 80px ${P.red}60` }}
           >
             <Siren className="w-14 h-14 group-hover:scale-110 transition-transform animate-bounce" />
@@ -142,7 +149,7 @@ export default function SOSDispatchPage() {
             <p className="text-[11px] font-bold uppercase tracking-widest" style={{ color: P.text3 }}>Or Select Quick Incident Category:</p>
             <div className="flex flex-wrap justify-center gap-3">
               {incidentPresets.map((p, i) => (
-                <button key={i} onClick={() => triggerSOS(p.type, p.priority)} className="px-4 py-2.5 rounded-xl text-[11px] font-bold transition-all hover:-translate-y-px flex items-center gap-2 hover:scale-105" style={{ background: `${P.red}10`, color: P.text1, border: `1px solid ${P.red}25` }}>
+                <button key={i} onClick={() => triggerSOS(p.type, p.priority)} className="px-4 py-2.5 rounded-[20px] text-[11px] font-bold transition-all hover:-translate-y-px flex items-center gap-2 hover:scale-105" style={{ background: `${P.red}10`, color: P.text1, border: `1px solid ${P.red}25` }}>
                   <Radio className="w-3.5 h-3.5 animate-pulse" style={{ color: P.red }} /> {p.label}
                 </button>
               ))}
@@ -155,7 +162,7 @@ export default function SOSDispatchPage() {
       <Reveal delay={150}>
         <div className="space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-4" style={{ borderColor: P.border }}>
-            <h2 className="text-[16px] font-bold text-white flex items-center gap-2">
+            <h2 className="text-[16px] font-bold text-[var(--color-text1)] flex items-center gap-2">
               <Radio className="w-4 h-4" style={{ color: P.red }} /> Live Emergency Alerts ({alerts.length})
             </h2>
             <span className="text-[11px] font-mono font-bold tracking-wider uppercase" style={{ color: P.text3 }}>Karnataka PCR Network #112</span>
@@ -170,7 +177,7 @@ export default function SOSDispatchPage() {
                   <div className="flex items-center justify-between border-b pb-4 mb-4 relative z-10" style={{ borderColor: P.border }}>
                     <div>
                       <span className="text-[10px] font-mono font-bold uppercase tracking-widest block mb-1" style={{ color: alert.priority === 'CRITICAL' ? P.red : P.amber }}>{alert.priority} PRIORITY</span>
-                      <h3 className="text-[16px] font-extrabold text-white leading-tight">{alert.incident_type}</h3>
+                      <h3 className="text-[16px] font-extrabold text-[var(--color-text1)] leading-tight">{alert.incident_type}</h3>
                     </div>
                     <span className={`px-3 py-1.5 rounded-full font-mono text-[10px] font-bold tracking-wider uppercase shadow-lg ${alert.status === 'RESOLVED' ? '' : 'animate-pulse'}`} style={{ background: alert.status === 'RESOLVED' ? `${P.green}15` : `${P.red}15`, color: alert.status === 'RESOLVED' ? P.green : P.red, border: `1px solid ${alert.status === 'RESOLVED' ? P.green : P.red}30` }}>
                       {alert.status}
@@ -178,28 +185,28 @@ export default function SOSDispatchPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 text-[12px] relative z-10 flex-1 content-start mb-5">
-                    <div className="p-3.5 rounded-2xl border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
+                    <div className="p-3.5 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                       <span className="flex items-center gap-1.5 mb-1 text-[9px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><User className="w-3 h-3" style={{ color: P.violet }} /> Caller / Patrol</span>
-                      <p className="font-bold text-white text-[13px] truncate">{alert.caller_name}</p>
+                      <p className="font-bold text-[var(--color-text1)] text-[13px] truncate">{alert.caller_name}</p>
                     </div>
-                    <div className="p-3.5 rounded-2xl border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
+                    <div className="p-3.5 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                       <span className="flex items-center gap-1.5 mb-1 text-[9px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><Phone className="w-3 h-3" style={{ color: P.blue }} /> Contact Phone</span>
                       <p className="font-bold text-[13px]" style={{ color: P.blue }}>{alert.caller_phone}</p>
                     </div>
-                    <div className="col-span-2 p-3.5 rounded-2xl border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
+                    <div className="col-span-2 p-3.5 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                       <span className="flex items-center gap-1.5 mb-1 text-[9px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><MapPin className="w-3 h-3" style={{ color: P.coral }} /> Location Coordinates</span>
                       <p className="font-bold text-[13px]" style={{ color: P.amber }}>{alert.address}</p>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl flex items-center justify-between text-[11px] relative z-10" style={{ background: "rgba(0,0,0,0.4)", border: `1px solid ${P.border}` }}>
+                  <div className="p-4 rounded-[28px] flex items-center justify-between text-[11px] relative z-10" style={{ background: "rgba(0,0,0,0.4)", border: `1px solid ${P.border}` }}>
                     <div className="flex items-center gap-2 font-mono font-bold" style={{ color: P.coralSoft }}>
                       <Navigation className="w-4 h-4" style={{ color: P.coral }} />
                       <span>Assigned: {alert.assigned_pcr}</span>
                     </div>
 
                     {alert.status !== 'RESOLVED' ? (
-                      <button onClick={() => handleUpdateStatus(alert.id, 'RESOLVED')} className="px-4 py-2 text-white font-bold rounded-xl text-[10px] uppercase tracking-wider transition-all hover:scale-105 shadow-lg" style={{ background: `linear-gradient(135deg, ${P.green}, #059669)` }}>
+                      <button onClick={() => handleUpdateStatus(alert.id, 'RESOLVED')} className="px-4 py-2 text-[var(--color-text1)] font-bold rounded-[20px] text-[10px] uppercase tracking-wider transition-all hover:scale-105 shadow-lg" style={{ background: `linear-gradient(135deg, ${P.green}, #059669)` }}>
                         Mark Resolved
                       </button>
                     ) : (

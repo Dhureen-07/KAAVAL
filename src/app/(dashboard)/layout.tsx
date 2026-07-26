@@ -4,26 +4,12 @@ import { OfflineIndicator } from "@/components/layout/OfflineIndicator"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden" style={{ background: "#0A0118" }}>
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden" style={{ background: "#F5F5F7" }}>
       
-      {/* Ambient liquid background */}
+      {/* Ultra-clean minimalistic background (No orbs, just pure layout) */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
-        {/* Mesh gradient orbs */}
-        <div
-          className="absolute -top-[15%] -left-[10%] w-[50vw] h-[50vw] max-w-[650px] max-h-[650px] rounded-full blur-[160px]"
-          style={{ background: "rgba(124,92,252,0.06)", animation: "ambient-drift 20s ease-in-out infinite" }}
-        />
-        <div
-          className="absolute -bottom-[15%] -right-[10%] w-[45vw] h-[45vw] max-w-[550px] max-h-[550px] rounded-full blur-[140px]"
-          style={{ background: "rgba(255,107,66,0.04)", animation: "ambient-drift 25s ease-in-out infinite reverse" }}
-        />
-        <div
-          className="absolute top-1/3 right-1/4 w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] rounded-full blur-[180px]"
-          style={{ background: "rgba(124,92,252,0.03)" }}
-        />
-        
-        {/* Edge vignette */}
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, #0A0118 100%)" }} />
+        {/* Edge vignette to add slight depth without color */}
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, rgba(0,0,0,0.02) 100%)" }} />
       </div>
       
       <TopNav />

@@ -309,13 +309,7 @@ def _build_chart_figure(
         else:
             fig = px.bar(df, x=x_col, y=y_col, title=title)
 
-        chart_json = json.loads(
-        json.dumps(
-        fig,
-        cls=PlotlyJSONEncoder
-        )
-
-    )
+        chart_json = json.loads(json.dumps(fig, cls=PlotlyJSONEncoder))
         return chart_json, None
     except Exception as exc:
         return None, f"Chart generation failed: {exc}"

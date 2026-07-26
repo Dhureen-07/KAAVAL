@@ -3,6 +3,8 @@ import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "sonner";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -27,13 +29,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${outfit.variable} ${jetbrains.variable} font-sans min-h-screen bg-[#0A0118] text-white antialiased`}>
-        <TooltipProvider>
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </TooltipProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${outfit.variable} ${jetbrains.variable} font-sans min-h-screen bg-[var(--color-background)] text-[var(--color-text1)] antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <TooltipProvider>
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </TooltipProvider>
+          <Toaster theme="system" richColors position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
   );

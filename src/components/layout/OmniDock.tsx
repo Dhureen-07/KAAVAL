@@ -21,15 +21,12 @@ export function OmniDock() {
 
   return (
     <div className="fixed bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-[100] pointer-events-none w-max max-w-[95vw]">
-      {/* The main pill container mimicking the uploaded image */}
       <div 
         className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-[2rem] sm:rounded-full overflow-x-auto scrollbar-none"
         style={{ 
-          background: "rgba(10, 5, 20, 0.6)", 
-          backdropFilter: "blur(20px)", 
-          WebkitBackdropFilter: "blur(20px)",
-          border: "1px solid rgba(255, 255, 255, 0.08)",
-          boxShadow: "0 10px 40px rgba(0,0,0,0.5)"
+          background: "rgba(255, 255, 255, 0.75)", 
+          border: "1px solid rgba(255, 255, 255, 0.9)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.06)"
         }}
       >
         {dockItems.map((item) => {
@@ -39,35 +36,35 @@ export function OmniDock() {
               
               {/* Tooltip */}
               <div className="absolute -top-12 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-200 scale-95 group-hover:scale-100 z-50">
-                <div className="px-3 py-1.5 rounded-lg text-[11px] font-bold text-white whitespace-nowrap shadow-xl border border-white/10" style={{ background: "rgba(20,15,35,0.9)", backdropFilter: "blur(10px)" }}>
+                <div className="px-3 py-1.5 rounded-lg text-[11px] font-bold text-[var(--color-text1)] whitespace-nowrap shadow-xl border border-white/10" style={{ background: "rgba(24,24,27,0.95)", backdropFilter: "blur(10px)" }}>
                   {item.title}
                 </div>
               </div>
 
-              {/* Icon Container (Squircle shape for active state like the image) */}
+              {/* Icon Container */}
               <div
-                className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-[14px] sm:rounded-2xl transition-all duration-300
+                className={`w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-[18px] transition-all duration-300
                   ${isActive 
-                    ? "" // Background handled in inline style for that soft blue glow
-                    : "hover:bg-white/5"}
+                    ? "" 
+                    : "hover:bg-black/5"}
                 `}
                 style={{ 
-                  background: isActive ? "rgba(74, 114, 255, 0.25)" : "transparent",
-                  border: isActive ? "1px solid rgba(74, 114, 255, 0.2)" : "1px solid transparent"
+                  background: isActive ? "rgba(0, 122, 255, 0.12)" : "transparent",
+                  border: "none"
                 }}
               >
                 <item.icon 
                   strokeWidth={isActive ? 2.5 : 2} 
-                  className={`transition-all duration-300 ${isActive ? "w-5 h-5 sm:w-5 sm:h-5 text-[#60A5FA]" : "w-5 h-5 sm:w-5 sm:h-5 text-[#A19BB0] group-hover:text-white"}`} 
+                  className={`transition-all duration-300 ${isActive ? "w-5 h-5 sm:w-5 sm:h-5 text-[#007AFF]" : "w-5 h-5 sm:w-5 sm:h-5 text-[var(--color-text2)] group-hover:text-[var(--color-text1)]"}`} 
                 />
               </div>
               
-              {/* Glowing Dot underneath the active item */}
+              {/* Active indicator dot */}
               <div 
-                className={`absolute -bottom-1 w-1 h-1 rounded-full transition-all duration-300 ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-0"}`} 
+                className={`absolute -bottom-1 w-1.5 h-1.5 rounded-full transition-all duration-300 ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-0"}`} 
                 style={{ 
-                  background: "#60A5FA", 
-                  boxShadow: "0 0 8px 1px rgba(96,165,250,0.8)" 
+                  background: "#007AFF", 
+                  boxShadow: "0 0 10px 2px rgba(0,122,255,0.4)" 
                 }} 
               />
             </Link>

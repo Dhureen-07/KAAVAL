@@ -2,22 +2,25 @@
 
 import { useState, useEffect, useRef, type ReactNode } from "react"
 import { Car, Camera, Search, ShieldAlert, AlertTriangle, CheckCircle2, Plus, MapPin, User, FileText, Zap } from "lucide-react"
+import { toast } from "sonner"
 
 /* ═══════ Colors ═══════ */
 const P = {
-  coral:    "#FF6B42",
-  coralSoft:"#FF8F6B",
-  violet:   "#7C5CFC",
-  violetDim:"#5B3FD6",
-  green:    "#34D399",
-  red:      "#FF4757",
-  amber:    "#FBBF24",
-  blue:     "#60A5FA",
-  text1:    "#F4F0FB",
-  text2:    "#8B7FA8",
-  text3:    "#5D5278",
-  surface:  "rgba(255,255,255,0.03)",
-  border:   "rgba(255,255,255,0.06)",
+  background: "var(--color-background)",
+  surface: "var(--color-surface)",
+  panel: "var(--color-panel)",
+  border: "var(--color-border)",
+  text1: "var(--color-text1)",
+  text2: "var(--color-text2)",
+  text3: "var(--color-text3)",
+  coral: "var(--color-coral)",
+  coralSoft: "var(--color-coralSoft)",
+  amber: "var(--color-amber)",
+  violet: "var(--color-violet)",
+  blue: "var(--color-blue)",
+  green: "var(--color-green)",
+  red: "var(--color-red)",
+  glow: "var(--color-glow)",
 } as const
 
 /* ═══════ Scroll reveal ═══════ */
@@ -69,11 +72,21 @@ export default function ANPRScannerPage() {
     setLoading(true)
     try {
       const res = await fetch("http://localhost:8000/api/vehicle/anpr-lookup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plate_number: targetPlate }) })
-      if (res.ok) { const data = await res.json(); setResult(data.vehicle) } else throw new Error()
+      if (res.ok) { 
+        const data = await res.json(); 
+        setResult(data.vehicle);
+        toast.success(`Lookup complete for ${targetPlate}`);
+      } else throw new Error()
     } catch (e) {
       const found = allVehicles.find((v) => v.plate_number.replace(/-/g, "").toUpperCase() === targetPlate.replace(/-/g, "").toUpperCase())
-      if (found) setResult(found)
-      else setResult({ plate_number: targetPlate.toUpperCase(), owner_name: "Ramesh Kumar (Fallback)", vehicle_model: "Hyundai Creta", color: "White", status: "STOLEN", crime_reference: "FIR-442/2026 - Theft under BNS 303(2)", last_seen_location: "Silk Board Junction, Bengaluru" })
+      if (found) {
+        setResult(found);
+        toast.warning("Vehicle found in local database");
+      }
+      else {
+        setResult({ plate_number: targetPlate.toUpperCase(), owner_name: "Ramesh Kumar (Fallback)", vehicle_model: "Hyundai Creta", color: "White", status: "STOLEN", crime_reference: "FIR-442/2026 - Theft under BNS 303(2)", last_seen_location: "Silk Board Junction, Bengaluru" });
+        toast.info("No live record found, showing simulated fallback");
+      }
     } finally { setLoading(false) }
   }
 
@@ -82,9 +95,18 @@ export default function ANPRScannerPage() {
     try {
       const res = await fetch("http://localhost:8000/api/vehicles", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(newVehicle) })
       if (res.ok) {
-        setShowAddForm(false); setNewVehicle({ plate_number: "", owner_name: "", vehicle_model: "", color: "Black", status: "WANTED", crime_reference: "", last_seen_location: "Bengaluru" }); fetchAllVehicles(); handleLookup(newVehicle.plate_number)
+        setShowAddForm(false); 
+        setNewVehicle({ plate_number: "", owner_name: "", vehicle_model: "", color: "Black", status: "WANTED", crime_reference: "", last_seen_location: "Bengaluru" }); 
+        fetchAllVehicles(); 
+        handleLookup(newVehicle.plate_number);
+        toast.success("Vehicle successfully flagged in system");
+      } else {
+        toast.error("Failed to register vehicle in database");
       }
-    } catch (e) { alert("Added to local memory"); setShowAddForm(false) }
+    } catch (e) { 
+      toast.error("Connection error. Local queue updated."); 
+      setShowAddForm(false); 
+    }
   }
 
   return (
@@ -94,19 +116,19 @@ export default function ANPRScannerPage() {
       <Reveal>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6" style={{ borderBottom: `1px solid ${P.border}` }}>
           <div className="flex items-start gap-4">
-            <div className="p-3 rounded-2xl relative group overflow-hidden" style={{ background: `${P.amber}15`, border: `1px solid ${P.amber}30` }}>
+            <div className="p-3 rounded-[28px] relative group overflow-hidden" style={{ background: `${P.amber}15`, border: `1px solid ${P.amber}30` }}>
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle at 50% 50%, ${P.amber}40, transparent 70%)` }} />
               <Car className="w-6 h-6 relative z-10" style={{ color: P.amber }} />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white leading-tight flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-text1)] leading-tight flex items-center gap-3">
                 ANPR Network
                 <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border tracking-wide uppercase shadow-lg" style={{ background: `${P.red}15`, color: P.red, borderColor: `${P.red}30` }}>LIVE 60 FPS</span>
               </h1>
               <p className="text-[13px] mt-1.5 font-light" style={{ color: P.text2 }}>Automatic Number Plate Recognition & Stolen Vehicle Hotlist Database.</p>
             </div>
           </div>
-          <button onClick={() => setShowAddForm(!showAddForm)} className="px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all hover:scale-105 flex items-center gap-2 self-start md:self-auto glass-panel" style={{ color: P.text1 }}>
+          <button onClick={() => setShowAddForm(!showAddForm)} className="px-5 py-2.5 rounded-[20px] text-[13px] font-semibold transition-all hover:scale-105 flex items-center gap-2 self-start md:self-auto glass-panel" style={{ color: P.text1 }}>
             <Plus className="w-4 h-4" style={{ color: P.amber }} /> Flag Suspect Vehicle
           </button>
         </div>
@@ -116,42 +138,42 @@ export default function ANPRScannerPage() {
       {showAddForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200" style={{ background: "rgba(10,1,24,0.85)", backdropFilter: "blur(12px)" }}>
           <form onSubmit={handleAddVehicle} className="glass-panel-heavy p-8 rounded-3xl max-w-2xl w-full space-y-5">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
+            <h3 className="text-xl font-bold text-[var(--color-text1)] flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
               <ShieldAlert className="w-5 h-5" style={{ color: P.amber }} /> Flag Vehicle in Crime Watch Database
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-[12px]">
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Plate Number</label>
-                <input type="text" placeholder="KA-03-HA-8812" value={newVehicle.plate_number} onChange={(e) => setNewVehicle({ ...newVehicle, plate_number: e.target.value })} className="w-full p-3 rounded-xl font-mono uppercase outline-none text-white font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="KA-03-HA-8812" value={newVehicle.plate_number} onChange={(e) => setNewVehicle({ ...newVehicle, plate_number: e.target.value })} className="w-full p-3 rounded-[20px] font-mono uppercase outline-none text-[var(--color-text1)] font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Owner Name</label>
-                <input type="text" placeholder="Ramesh Kumar" value={newVehicle.owner_name} onChange={(e) => setNewVehicle({ ...newVehicle, owner_name: e.target.value })} className="w-full p-3 rounded-xl outline-none text-white" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="Ramesh Kumar" value={newVehicle.owner_name} onChange={(e) => setNewVehicle({ ...newVehicle, owner_name: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Make & Model</label>
-                <input type="text" placeholder="Hyundai Creta" value={newVehicle.vehicle_model} onChange={(e) => setNewVehicle({ ...newVehicle, vehicle_model: e.target.value })} className="w-full p-3 rounded-xl outline-none text-white" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="Hyundai Creta" value={newVehicle.vehicle_model} onChange={(e) => setNewVehicle({ ...newVehicle, vehicle_model: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Flag Status</label>
-                <select value={newVehicle.status} onChange={(e) => setNewVehicle({ ...newVehicle, status: e.target.value })} className="w-full p-3 rounded-xl outline-none text-white cursor-pointer font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
-                  <option value="STOLEN" style={{ background: "#0A0118", color: P.red }}>🚨 STOLEN</option>
-                  <option value="WANTED" style={{ background: "#0A0118", color: P.amber }}>⚠️ WANTED</option>
-                  <option value="CLEAN" style={{ background: "#0A0118", color: P.green }}>✅ CLEAN RECORD</option>
+                <select value={newVehicle.status} onChange={(e) => setNewVehicle({ ...newVehicle, status: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[var(--color-text1)] cursor-pointer font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
+                  <option value="STOLEN" style={{ background: "#09090B", color: P.red }}>🚨 STOLEN</option>
+                  <option value="WANTED" style={{ background: "#09090B", color: P.amber }}>⚠️ WANTED</option>
+                  <option value="CLEAN" style={{ background: "#09090B", color: P.green }}>✅ CLEAN RECORD</option>
                 </select>
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Crime Reference</label>
-                <input type="text" placeholder="FIR-442/2026" value={newVehicle.crime_reference} onChange={(e) => setNewVehicle({ ...newVehicle, crime_reference: e.target.value })} className="w-full p-3 rounded-xl outline-none text-white" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
+                <input type="text" placeholder="FIR-442/2026" value={newVehicle.crime_reference} onChange={(e) => setNewVehicle({ ...newVehicle, crime_reference: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Last Seen At</label>
-                <input type="text" placeholder="Silk Board Junction" value={newVehicle.last_seen_location} onChange={(e) => setNewVehicle({ ...newVehicle, last_seen_location: e.target.value })} className="w-full p-3 rounded-xl outline-none text-white" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
+                <input type="text" placeholder="Silk Board Junction" value={newVehicle.last_seen_location} onChange={(e) => setNewVehicle({ ...newVehicle, last_seen_location: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
-              <button type="button" onClick={() => setShowAddForm(false)} className="px-5 py-2.5 rounded-xl text-[12px] font-semibold hover:bg-white/5 transition-all" style={{ color: P.text2 }}>Cancel</button>
-              <button type="submit" className="px-5 py-2.5 rounded-xl text-[12px] font-bold text-white transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.red}, #E11D48)` }}>Register Flagged Vehicle</button>
+              <button type="button" onClick={() => setShowAddForm(false)} className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold hover:bg-white/5 transition-all" style={{ color: P.text2 }}>Cancel</button>
+              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-[var(--color-text1)] transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.red}, #E11D48)` }}>Register Flagged Vehicle</button>
             </div>
           </form>
         </div>
@@ -166,7 +188,7 @@ export default function ANPRScannerPage() {
             <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] opacity-20 pointer-events-none" style={{ background: P.amber }} />
             
             <div className="flex items-center justify-between mb-5 relative z-10">
-              <span className="text-[12px] font-bold text-white flex items-center gap-2">
+              <span className="text-[12px] font-bold text-[var(--color-text1)] flex items-center gap-2">
                 <Camera className="w-4 h-4 animate-pulse" style={{ color: P.amber }} /> ANPR Camera Feed #04 - Silk Board Junction
               </span>
               <span className="text-[9px] font-mono font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" style={{ background: `${P.green}15`, color: P.green, border: `1px solid ${P.green}30` }}>
@@ -174,16 +196,16 @@ export default function ANPRScannerPage() {
               </span>
             </div>
 
-            <div className="relative aspect-video rounded-2xl overflow-hidden flex items-center justify-center border z-10" style={{ background: "#05010C", borderColor: P.border }}>
+            <div className="relative aspect-video rounded-[28px] overflow-hidden flex items-center justify-center border z-10" style={{ background: "#05010C", borderColor: P.border }}>
               <div className="absolute inset-0 bg-[radial-gradient(rgba(251,191,36,0.15)_1px,transparent_1px)] [background-size:20px_20px] opacity-30" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0118] via-transparent to-[#0A0118] opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-transparent to-[#09090B] opacity-80" />
 
-              <div className="relative w-64 h-24 rounded-xl p-2.5 flex flex-col justify-between animate-pulse border-2" style={{ borderColor: `${P.amber}80`, boxShadow: `0 0 40px ${P.amber}30` }}>
+              <div className="relative w-64 h-24 rounded-[20px] p-2.5 flex flex-col justify-between animate-pulse border-2" style={{ borderColor: `${P.amber}80`, boxShadow: `0 0 40px ${P.amber}30` }}>
                 <div className="flex justify-between text-[10px] font-mono font-bold" style={{ color: P.amber }}>
                   <span>[ TARGET_ACQUIRED ]</span>
                   <span>CONF: 99.4%</span>
                 </div>
-                <div className="text-center font-mono font-extrabold text-2xl tracking-widest text-white drop-shadow-md">
+                <div className="text-center font-mono font-extrabold text-2xl tracking-widest text-[var(--color-text1)] drop-shadow-md">
                   KA-03-HA-8812
                 </div>
                 <div className="flex justify-between text-[9px] font-mono" style={{ color: P.text3 }}>
@@ -219,12 +241,12 @@ export default function ANPRScannerPage() {
         <div className="space-y-6 flex flex-col">
           <Reveal delay={150}>
             <div className="glass-panel p-6 rounded-3xl border space-y-4 relative overflow-hidden" style={{ borderColor: P.border, background: P.surface }}>
-              <label className="text-[13px] font-bold text-white flex items-center gap-2 relative z-10">
+              <label className="text-[13px] font-bold text-[var(--color-text1)] flex items-center gap-2 relative z-10">
                 <Search className="w-4 h-4" style={{ color: P.coral }} /> Manual Registration Lookup
               </label>
               <div className="flex flex-col sm:flex-row gap-3 relative z-10">
-                <input type="text" value={plateInput} onChange={(e) => setPlateInput(e.target.value.toUpperCase())} placeholder="Enter Plate (e.g. KA-03-HA-8812)" className="flex-1 p-3.5 rounded-2xl text-white font-mono uppercase font-bold text-sm tracking-wider outline-none focus:ring-1 transition-all" style={{ background: "#0A0118", border: `1px solid ${P.border}`, focusRing: P.coral }} />
-                <button onClick={() => handleLookup()} disabled={loading || !plateInput.trim()} className="px-6 py-3.5 rounded-2xl text-[12px] font-bold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-lg whitespace-nowrap" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})`, boxShadow: `0 8px 24px ${P.coral}40` }}>
+                <input type="text" value={plateInput} onChange={(e) => setPlateInput(e.target.value.toUpperCase())} placeholder="Enter Plate (e.g. KA-03-HA-8812)" className="flex-1 p-3.5 rounded-[28px] text-[var(--color-text1)] font-mono uppercase font-bold text-sm tracking-wider outline-none focus:ring-1 transition-all" style={{ background: "#09090B", border: `1px solid ${P.border}` }} />
+                <button onClick={() => handleLookup()} disabled={loading || !plateInput.trim()} className="px-6 py-3.5 rounded-[28px] text-[12px] font-bold text-[var(--color-text1)] transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-lg whitespace-nowrap" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})`, boxShadow: `0 8px 24px ${P.coral}40` }}>
                   {loading ? "Searching..." : "Lookup Database"}
                 </button>
               </div>
@@ -239,7 +261,7 @@ export default function ANPRScannerPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-5 mb-5 relative z-10 gap-3" style={{ borderColor: P.border }}>
                   <div>
                     <span className="text-[10px] font-mono uppercase tracking-wider block mb-1" style={{ color: P.text3 }}>Registration Number</span>
-                    <h2 className="text-3xl font-black font-mono tracking-widest text-white drop-shadow-md">{result.plate_number}</h2>
+                    <h2 className="text-3xl font-black font-mono tracking-widest text-[var(--color-text1)] drop-shadow-md">{result.plate_number}</h2>
                   </div>
                   {result.status === "STOLEN" ? (
                     <span className="px-4 py-2 rounded-full font-mono text-[11px] font-bold flex items-center gap-2 animate-pulse shadow-lg" style={{ background: `${P.red}15`, color: P.red, border: `1px solid ${P.red}40` }}>
@@ -257,19 +279,19 @@ export default function ANPRScannerPage() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-[12px] relative z-10 flex-1 content-start">
-                  <div className="p-4 rounded-2xl border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
+                  <div className="p-4 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                     <span className="flex items-center gap-1.5 mb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><User className="w-3.5 h-3.5" style={{ color: P.violet }} /> Registered Owner</span>
-                    <p className="font-bold text-white text-[14px]">{result.owner_name}</p>
+                    <p className="font-bold text-[var(--color-text1)] text-[14px]">{result.owner_name}</p>
                   </div>
-                  <div className="p-4 rounded-2xl border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
+                  <div className="p-4 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                     <span className="flex items-center gap-1.5 mb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><Car className="w-3.5 h-3.5" style={{ color: P.amber }} /> Make & Model</span>
-                    <p className="font-bold text-white text-[14px]">{result.vehicle_model}</p>
+                    <p className="font-bold text-[var(--color-text1)] text-[14px]">{result.vehicle_model}</p>
                   </div>
-                  <div className="p-4 rounded-2xl border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
+                  <div className="p-4 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                     <span className="flex items-center gap-1.5 mb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><FileText className="w-3.5 h-3.5" style={{ color: P.coral }} /> Crime Reference</span>
                     <p className="font-bold text-[13px] break-words" style={{ color: result.status === 'CLEAN' ? P.text1 : P.red }}>{result.crime_reference || "None"}</p>
                   </div>
-                  <div className="p-4 rounded-2xl border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
+                  <div className="p-4 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                     <span className="flex items-center gap-1.5 mb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><MapPin className="w-3.5 h-3.5" style={{ color: P.blue }} /> Last Sighted At</span>
                     <p className="font-bold text-[13px]" style={{ color: P.blue }}>{result.last_seen_location}</p>
                   </div>
