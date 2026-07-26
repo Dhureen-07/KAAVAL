@@ -1,92 +1,111 @@
-###CHANGES
+# 🛡️ KAAVAL AI: Next-Generation Public Safety & Emergency Intelligence Platform
 
-## Modified Files
-- **backend/router.py**: Reimplemented clean orchestration logic, added proper imports, session memory handling, passed conversation history to ML engine, fixed return statement, and ensured graceful fallback flow.
-- **backend/engines/ml_engine.py**: Added global `SESSION_MEMORY` for simple session tracking and updated imports.
-- **backend/requirements.txt**: Added required packages `pandas`, `plotly`, `langchain`, and `langchain-openai` (with versions) to support data handling, graph generation, and LLM orchestration.
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python" alt="Python" />
+  <img src="https://img.shields.io/badge/HuggingFace-Transformers-yellow?style=for-the-badge&logo=huggingface" alt="HuggingFace" />
+  <img src="https://img.shields.io/badge/TailwindCSS-V4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/LangChain-Enabled-green?style=for-the-badge" alt="LangChain" />
+</div>
 
-## New Packages Added
-- `pandas==2.2.2` – Dataframe manipulation for chart generation.
-- `plotly==5.22.0` – Interactive chart creation.
-- `langchain==0.2.0` – Core LLM orchestration utilities.
-- `langchain-openai==0.1.5` – OpenAI compatible provider for OpenRouter, Groq, and HuggingFace backends.
-
-These changes enable:
-- Primary use of OpenRouter `/free` model with fallback to Groq `/free` and HuggingFace free models, reducing 429 errors.
-- Structured JSON output with proper handling of textual, numeric, tabular, and chart data.
-- Automatic generation of Plotly charts when a query requests visualisation.
-- Simple in‑memory session memory (last 10 turns) to maintain conversational context.
-- Updated documentation and dependency list for production deployment.
-
-
-# 🛡️ KAAVAL AI: Advanced Public Safety & Emergency Intelligence Platform
-
-> **KAAVAL** (meaning "Guard" or "Protection" in Kannada) is a next-generation AI-powered intelligence and public safety platform. Designed for law enforcement officers and emergency personnel, KAAVAL accelerates incident response by providing real-time document scanning (OCR), context translation, verified crime record querying, and automated First Information Report (FIR) drafting.
+> **KAAVAL** (meaning "Guard" or "Protection" in Kannada) is an advanced, ultra-responsive AI intelligence dashboard designed for law enforcement and emergency response. It merges cutting-edge Machine Learning (OCR, Neural Translation, RAG-based LLM orchestration) with a breathtaking **Apple iOS / One UI Hybrid** glassmorphic spatial interface.
 
 ---
 
-## 📑 Table of Contents
-1. [Overview](#-overview)
-2. [Core Capabilities](#-core-capabilities)
-3. [Technology Stack](#-technology-stack)
-4. [Architecture & AI Pipeline](#-architecture--ai-pipeline)
-5. [Project Structure](#-project-structure)
-6. [Local Development Setup](#-local-development-setup)
-7. [Environment Variables](#-environment-variables)
-8. [API Reference & Testing](#-api-reference--testing)
-9. [Troubleshooting & Fallbacks](#-troubleshooting--fallbacks)
+## 🌟 The Vision & What's New
+
+We built KAAVAL to solve the critical latency and data silos in traditional police command centers. The platform allows officers to scan handwritten FIRs, translate evidence in real-time, cross-reference suspects against a 1.7GB crime database, and dispatch emergency units instantly.
+
+**Recent Upgrades for this Hackathon:**
+- **Dynamic Light/Dark Mode:** Completely rebuilt styling utilizing CSS variables for instant, jank-free theme switching. Features an Apple-inspired off-white mode and a true OLED dark mode.
+- **Widespread Interactivity:** Replaced static elements with a global `sonner` Toast notification engine. Buttons, filters, and emergency triggers now slide in beautiful visual confirmations.
+- **Interactive SOS Dispatch:** A live top-navigation SOS trigger that mimics a critical dispatch protocol and routes users straight to the Command Center interface.
 
 ---
 
-## 🌟 Overview
-KAAVAL merges state-of-the-art Generative AI with intuitive interface design (inspired by the **Outcrowd design system**) to create a seamless operational dashboard for law enforcement. Whether an officer is scanning a handwritten FIR from a remote station or querying the central database for a suspect's history, KAAVAL provides a unified, glassmorphic spatial UI that is highly responsive.
+## 🧠 Machine Learning Engine (Technical Architecture)
 
----
+KAAVAL isn’t just a dashboard—it is powered by a robust, multi-modal Machine Learning pipeline orchestrated via **Python 3** and **LangChain**.
 
-## 🚀 Core Capabilities
+### 1. Vision & Document Parsing (OCR)
+* **Model:** `microsoft/trocr-base-printed`
+* **Function:** In the real world, police documents and FIRs are noisy, degraded, or handwritten. We utilize Hugging Face's Transformer-based Optical Character Recognition (TrOCR) to extract text with incredibly high accuracy, bypassing the limitations of legacy OCR engines like Tesseract.
 
-- **📄 Document OCR Scanner:** Extracts printed and handwritten text from scanned incident logs, IDs, and police complaint reports utilizing the **Hugging Face TrOCR** (`microsoft/trocr-base-printed`) model.
-- **🌐 Language Translation Hub:** Real-time, bidirectional translation of parsed text and context between **Kannada (ಕನ್ನಡ)** and **English** using the **NLLB-200** (`facebook/nllb-200-distilled-600M`) model.
-- **🧠 Central AI Assistant (RAG):** A Retrieval-Augmented Generation (RAG) powered intelligence assistant. Uses **NVIDIA Nemotron** or **Google Gemma** models via OpenRouter to retrieve criminal records, cross-reference vehicles, and execute intelligence sweeps against the local SQLite crime database.
-- **⚖️ Legal FIR Drafting Engine:** Automatically structures and drafts formal legal First Information Reports (FIRs) based on officer notes, maintaining strict legal vernacular.
-- **💻 Interactive Spatial UI:** A modern frontend featuring Apple/Linear-inspired aesthetics, glassmorphic panels, dynamic animations, and a central navigation **OmniDock**.
+### 2. Bilingual Neural Translation Context
+* **Model:** `facebook/nllb-200-distilled-600M`
+* **Function:** Evidence and witness statements in Karnataka are primarily in Kannada. Our translation node uses the NLLB (No Language Left Behind) model to provide real-time, bidirectional translation to English, ensuring the central LLM can reason over the context perfectly without losing crucial nuances.
 
----
+### 3. Agentic RAG & LangChain Orchestration
+* **Architecture:** `langchain`, `langchain-openai`, custom `query_classifier.py`
+* **Function:** We built a custom reasoning engine that acts as the "brain" of the AI Assistant. It enables KAAVAL AI to answer crime-related queries by analyzing the Karnataka crime dataset. 
 
-## 💻 Technology Stack
+**Core ML Features:**
+- **Natural Language Query Handling:** Accepts crime-related questions in plain English.
+- **Query Classification:** Identifies whether a query should be handled by the ML engine, District Analytics, SQLite Legal Search, or Web Search.
+- **Entity Extraction:** Detects crime types and district names from user queries using regex-based matching.
+- **Crime Data Analysis:** Performs filtering, aggregation, and comparison on the crime dataset using Pandas.
+- **District-wise Statistics:** Retrieves crime counts and district-level insights from the dataset.
+- **LLM-Based Response Generation:** Converts analytical results into human-readable responses using OpenRouter or Groq models.
 
-### Frontend
-- **Framework:** Next.js (App Router)
-- **Styling:** Tailwind CSS, PostCSS
-- **Components:** Radix UI / shadcn-ui (Customized for Outcrowd aesthetics)
-- **Language:** TypeScript
-
-### Backend
-- **Server:** Python 3 (Custom HTTP Server / REST API)
-- **Database:** SQLite (`kaaval.db` - 1.7GB+)
-- **AI / ML Integration:** Hugging Face Hub (Transformers), OpenRouter API
-- **Data Ingestion:** Custom Python scripts (`ingest_datasets.py`)
-
----
-
-## 🧠 Architecture & AI Pipeline
-
-The pipeline is designed to be highly modular, ensuring different engine components can be upgraded independently.
-
+**Processing Pipeline:**
 ```mermaid
 graph TD
-    A[Scanned Documents / ID Cards] -->|Upload| B(OCR Engine)
-    B -->|microsoft/trocr-base-printed| C[Extracted Kannada/English Text]
-    C --> D(Translation Engine)
-    D -->|facebook/nllb-200-distilled-600M| E[Unified English Context]
-    E --> F(AI Central Intelligence)
-    F <-->|Query| G[(Local Crime Database - SQLite)]
-    F <-->|Reasoning| H[OpenRouter LLMs / Hugging Face]
-    F --> I[Formatted Legal FIR / Intelligence Report]
+    A[User Query] --> B[Query Classifier]
+    B --> C[Entity Extraction]
+    C --> D[Dataset Filtering & Analysis]
+    D --> E[Statistical Results]
+    E --> F[LLM Response Generation]
+    F --> G[Final Response]
 ```
 
-### Resilient Processing Fail-safe
-To ensure the application remains functional in offline, low-bandwidth, or dev environments without API keys, KAAVAL includes a **graceful simulation fallback mode**. If `HF_TOKEN` or `OPENROUTER_API_KEY` are missing, the platform automatically switches to local simulation, mocking high-fidelity reports and database sweeps without throwing blocking errors.
+### 4. Dynamic Data Visualization
+* **Stack:** `pandas`, `plotly`
+* **Function:** If the AI Assistant detects a need for visualization (e.g., "plot the theft cases"), it automatically parses the SQLite data into a `pandas` DataFrame and generates interactive `plotly` HTML charts on the fly, rendering them directly in the chat interface.
+
+### 5. Resilient Simulation Fallback (Hackathon Fail-safe)
+* **Function:** Live demos are prone to API rate limits (HTTP 429) and network drops. We engineered a seamless **Simulation Mode**. If `HF_TOKEN` or `OPENROUTER_API_KEY` fail, the backend instantly routes to offline Mock Generators. The UI remains fully operational, providing simulated high-fidelity intelligence reports and database sweeps without throwing blocking errors.
+
+---
+
+## 🚀 Step-by-Step Execution Guide
+
+To run KAAVAL locally for evaluation, you need to spin up both the Next.js Frontend and the Python Backend.
+
+### 1. Start the Python Backend (ML Engine)
+Open a terminal and navigate to the project root:
+```bash
+cd backend
+python -m venv venv
+# Windows: venv\Scripts\activate | Mac/Linux: source venv/bin/activate
+pip install -r requirements.txt
+```
+*(Optional)* Add your `.env` file inside `backend/` with `OPENROUTER_API_KEY` and `HF_TOKEN`. If you skip this, KAAVAL will intelligently run in its robust Offline Simulation Mode.
+```bash
+python main.py
+```
+> The backend will spin up on `http://localhost:8000`.
+
+### 2. Start the Next.js Frontend (Spatial UI)
+Open a *new* terminal and navigate to the project root:
+```bash
+npm install
+npm run dev
+```
+> The frontend will be available at `http://localhost:3000`.
+
+---
+
+## 🎯 How to Use the Platform (For Judges)
+
+We have designed KAAVAL to be highly interactive. When you launch the frontend:
+
+1. **Test the Aesthetic:** On the landing page, click the **Sun/Moon icon** in the top navigation. Watch the entire application smoothly transition between Apple Light Mode and OLED Dark Mode.
+2. **Trigger an Emergency:** Click the red **SOS** button in the top navigation bar. You will see a critical dispatch notification slide in, and you will be routed to the live SOS Dispatch interface.
+3. **Explore the Command Center:** Navigate to the Dashboard. Click on the time filters (`24 Hours`, `7 Days`) and the crime category filters (`Property`, `Cyber`). Notice how every action is acknowledged with a crisp `sonner` toast notification.
+4. **Interact with the AI Assistant:** 
+   - Click **AI Assistant** in the sidebar.
+   - Type a query like: *"Cross-reference suspect vehicle KA-03-HA-8812"* or *"Draft a formal FIR for a mobile theft at Majestic Bus Stand."*
+   - Watch the neural interface process the query, showing glassmorphic loading states, and returning highly structured, actionable law enforcement intelligence.
 
 ---
 
@@ -95,113 +114,17 @@ To ensure the application remains functional in offline, low-bandwidth, or dev e
 ```text
 KAAVAL/
 ├── backend/                  # Core Python AI Server & Data Layer
-│   ├── data/                 # Datasets and raw files
-│   ├── engines/              # Modular search and processing engines
-│   ├── ml_engine/            # ML models (OCR, Translation, LLM hooks)
-│   ├── kaaval.db             # Primary SQLite Crime Database (1.7GB+)
-│   ├── main.py               # Core server routing and API endpoints
-│   ├── router.py             # Advanced query routing logic
-│   ├── database.py           # Database connection and CRUD operations
-│   ├── ingest_datasets.py    # Scripts to populate SQLite from raw data
-│   └── requirements.txt      # Python dependencies
-├── src/                      # Next.js Frontend Application
-│   ├── app/                  # App Router Pages
-│   │   ├── (dashboard)/      # Protected dashboard routes
-│   │   │   ├── ocr-translation/ # OCR & Translation Interface
-│   │   │   └── assistant/    # Central AI Assistant Chatbot
-│   ├── components/           # Reusable UI components (e.g., OmniDock)
-│   └── lib/                  # Utility functions and types
-├── public/                   # Static assets (images, templates, icons)
-├── package.json              # Node.js dependencies
-└── README.md                 # Project Documentation
+│   ├── engines/              # Modular search (legal matching, ANPR)
+│   ├── ml_engine/            # LangChain orchestration, OCR, Translation
+│   ├── database.py           # SQLite handlers
+│   └── main.py               # REST API Entry Point
+├── src/
+│   ├── app/                  # Next.js 15 App Router (Dashboard Pages)
+│   ├── components/           # UI Components (Glass panels, OmniDock, Toasts)
+│   └── lib/                  # Utilities (Palette variables)
+├── public/                   # Static assets
+└── globals.css               # CSS Variables for Light/Dark Mode
 ```
 
 ---
-
-## ⚙️ Environment Variables
-
-Create a `.env` file in the `backend/` directory to enable live API processing:
-
-```env
-# Hugging Face API key for OCR (TrOCR) and Translation (NLLB-200)
-# Get this from: https://huggingface.co/settings/tokens
-HF_TOKEN="hf_your_token_here"
-
-# OpenRouter API key for Central Intelligence (NVIDIA Nemotron / Gemma)
-# Get this from: https://openrouter.ai/keys
-OPENROUTER_API_KEY="sk-or-your_token_here"
-
-# Defines the default reasoning model for the AI Assistant
-REASONING_MODEL="google/gemma-4-31b-it:free"
-```
-
----
-
-## 🏁 Local Development Setup
-
-### Prerequisites
-*   [Node.js (v18+ LTS)](https://nodejs.org)
-*   [Python 3.10+](https://www.python.org/downloads/) (Ensure Python is added to `PATH` during installation)
-*   Git
-
-### Step 1: Initialize the Python Backend
-1. Open a terminal and navigate to the backend directory:
-   ```bash
-   cd KAAVAL/backend
-   ```
-2. *(Optional but recommended)* Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   # Windows
-   .\venv\Scripts\activate
-   # Mac/Linux
-   source venv/bin/activate
-   ```
-3. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Start the backend server:
-   ```bash
-   python main.py
-   ```
-   *The backend will initialize the SQLite connection and start listening on `http://0.0.0.0:8000`.*
-
-### Step 2: Initialize the Next.js Frontend
-1. Open a **new terminal window** and navigate to the project root:
-   ```bash
-   cd KAAVAL
-   ```
-2. Install Node packages:
-   ```bash
-   npm install
-   ```
-3. Start the Next.js development server:
-   ```bash
-   npm run dev
-   ```
-4. Access the application in your browser at: **`http://localhost:3000`**
-
----
-
-## 🧪 API Reference & Testing
-
-You can test the end-to‑to‑end pipeline using the Next.js UI:
-
-1. **Access the Dashboard:** Navigate to `http://localhost:3000/ocr-translation`.
-2. **Load Sample:** Click **"Load Sample Incident Report"** to populate a test document template.
-3. **Run OCR:** Click **"Run OCR Text Extraction"**. If `HF_TOKEN` is set, it will run live inference; otherwise, it will return a high‑fidelity simulation.
-4. **Translate:** Click **"Translate Text Context"** to see the OCR results converted to Kannada.
-5. **Intelligence Handoff:** Click **"Import OCR to Assistant"** to seamlessly transfer the extracted text to the Central AI Assistant for further querying, cross‑referencing, or FIR generation.
-
----
-
-## 🔧 Troubleshooting & Fallbacks
-
-- **Model Loading Errors:** If Hugging Face models fail to load, ensure your `HF_TOKEN` has read permissions and is correctly placed in `backend/.env` without leading/trailing spaces.
-- **Port Conflicts:** If port `8000` or `3000` is in use, you can change the backend port in `main.py` and the frontend port by running `npm run dev -- -p 3001`.
-- **Simulation Mode Active:** If you see "(Simulation Mode)" appended to your API responses, the backend has gracefully fallen back because an API key was not found or a rate limit was reached. Check your `.env` variables.
-
----
-
-*Built for KAAVAL AI.*
+*Built for the future of public safety.*
