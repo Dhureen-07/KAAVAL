@@ -12,7 +12,7 @@ export default function PredictivePage() {
             <TrendingUp className="w-8 h-8 text-primary" />
             Predictive Analytics
           </h1>
-          <p className="text-[color:var(--color-text2)] mt-1">Forecasting models for upcoming crime trends.</p>
+          <p className="text-t2 mt-1">Forecasting models for upcoming crime trends.</p>
         </div>
       </div>
 
@@ -26,8 +26,8 @@ export default function PredictivePage() {
         <div className="absolute inset-0 flex items-center justify-center">
             <div className="z-10 flex flex-col items-center justify-center bg-black/50 backdrop-blur-md border border-white/10 p-8 rounded-[28px] mx-4 text-center">
                 <BarChart className="w-12 h-12 text-primary mb-4 animate-pulse" />
-                <h2 className="text-xl font-bold text-[color:var(--color-text1)] mb-2">Generating Forecast Models...</h2>
-                <p className="text-[color:var(--color-text2)] text-sm max-w-sm">
+                <h2 className="text-xl font-bold text-t1 mb-2">Generating Forecast Models...</h2>
+                <p className="text-t2 text-sm max-w-sm">
                     Processing 2024 SCRB data through AI models to predict localized anomaly surges for the next 14 days.
                 </p>
             </div>

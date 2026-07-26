@@ -211,7 +211,7 @@ export default function TimelineBuilderPage() {
               <GitCommit className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[color:var(--color-text1)] leading-tight">Case Management & Timelines</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-t1 leading-tight">Case Management & Timelines</h1>
               <p className="text-[14px] mt-1.5 font-light" style={{ color: P.text2 }}>Track evidence chronologically and structure case datasets for AI analysis.</p>
             </div>
           </div>
@@ -240,17 +240,17 @@ export default function TimelineBuilderPage() {
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold" style={{ background: `${P.violet}15`, color: P.violet, border: `1px solid ${P.violet}30` }}>{currentCase.category}</span>
                 <span className="px-2.5 py-1 rounded-full text-[10px] font-bold" style={{ background: `${currentCase.priority === 'CRITICAL' ? P.red : currentCase.priority === 'HIGH' ? P.amber : P.green}15`, color: currentCase.priority === 'CRITICAL' ? P.red : currentCase.priority === 'HIGH' ? P.amber : P.green, border: `1px solid ${currentCase.priority === 'CRITICAL' ? P.red : currentCase.priority === 'HIGH' ? P.amber : P.green}30` }}>{currentCase.priority} PRIORITY</span>
               </div>
-              <h2 className="text-xl font-bold text-[color:var(--color-text1)] leading-tight">{currentCase.title}</h2>
+              <h2 className="text-xl font-bold text-t1 leading-tight">{currentCase.title}</h2>
               <p className="text-[13px] font-light" style={{ color: P.text2 }}>{currentCase.summary}</p>
             </div>
             <div className="flex items-center gap-6 text-[12px] font-mono border-t md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-8 shrink-0 relative z-10" style={{ borderColor: P.border, color: P.text2 }}>
               <div>
                 <span className="text-[10px] block mb-1" style={{ color: P.text3 }}>LOCATION</span>
-                <span className="font-semibold text-[color:var(--color-text1)] flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" style={{ color: P.blue }} /> {currentCase.location}</span>
+                <span className="font-semibold text-t1 flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" style={{ color: P.blue }} /> {currentCase.location}</span>
               </div>
               <div>
                 <span className="text-[10px] block mb-1" style={{ color: P.text3 }}>OFFICER</span>
-                <span className="font-semibold text-[color:var(--color-text1)] flex items-center gap-1.5"><User className="w-3.5 h-3.5" style={{ color: P.violet }} /> {currentCase.assigned_officer}</span>
+                <span className="font-semibold text-t1 flex items-center gap-1.5"><User className="w-3.5 h-3.5" style={{ color: P.violet }} /> {currentCase.assigned_officer}</span>
               </div>
             </div>
           </div>
@@ -270,14 +270,14 @@ export default function TimelineBuilderPage() {
           </div>
           {activeTab === "timeline" && (
             <div className="flex items-center gap-2">
-              <button onClick={() => setShowAddForm(!showAddForm)} className="px-4 py-2.5 rounded-[20px] text-[12px] font-bold text-[color:var(--color-text1)] flex items-center gap-2 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.blue}, #3B82F6)` }}>
+              <button onClick={() => setShowAddForm(!showAddForm)} className="px-4 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 flex items-center gap-2 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.blue}, #3B82F6)` }}>
                 <Plus className="w-4 h-4" /> Add Log Marker
               </button>
-              <button onClick={() => { setDatasetForm({ dataset_name: `${selectedCaseId} Dataset - ${new Date().toLocaleDateString()}`, description: `Compiled evidence logs for ${selectedCaseId}` }); setShowSaveDatasetModal(true) }} className="px-4 py-2.5 rounded-[20px] text-[12px] font-bold text-[color:var(--color-text1)] flex items-center gap-2 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})` }}>
+              <button onClick={() => { setDatasetForm({ dataset_name: `${selectedCaseId} Dataset - ${new Date().toLocaleDateString()}`, description: `Compiled evidence logs for ${selectedCaseId}` }); setShowSaveDatasetModal(true) }} className="px-4 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 flex items-center gap-2 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})` }}>
                 <Database className="w-4 h-4" /> Save as Dataset
               </button>
               <button onClick={handleExportJSON} className="p-2.5 rounded-[20px] transition-all hover:scale-105 glass-panel" title="Export as JSON">
-                <Download className="w-4 h-4 text-[color:var(--color-text1)]" />
+                <Download className="w-4 h-4 text-t1" />
               </button>
             </div>
           )}
@@ -288,21 +288,21 @@ export default function TimelineBuilderPage() {
       {showAddForm && activeTab === "timeline" && (
         <Reveal>
           <form onSubmit={handleAddNode} className="glass-panel p-6 rounded-[28px] border space-y-5" style={{ borderColor: `${P.blue}30` }}>
-            <h3 className="text-[15px] font-semibold text-[color:var(--color-text1)] flex items-center gap-2">
+            <h3 className="text-[15px] font-semibold text-t1 flex items-center gap-2">
               <Clock className="w-4 h-4" style={{ color: P.blue }} /> Add Timeline Event Node
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-[12px]">
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Event Title</label>
-                <input type="text" placeholder="e.g. CCTV Footage Captured" value={newNode.title} onChange={(e) => setNewNode({ ...newNode, title: e.target.value })} className="w-full p-3 rounded-[20px] text-[color:var(--color-text1)] outline-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="e.g. CCTV Footage Captured" value={newNode.title} onChange={(e) => setNewNode({ ...newNode, title: e.target.value })} className="w-full p-3 rounded-[20px] text-t1 outline-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Event Timestamp</label>
-                <input type="text" placeholder="YYYY-MM-DD HH:MM" value={newNode.event_timestamp} onChange={(e) => setNewNode({ ...newNode, event_timestamp: e.target.value })} className="w-full p-3 rounded-[20px] text-[color:var(--color-text1)] font-mono outline-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="YYYY-MM-DD HH:MM" value={newNode.event_timestamp} onChange={(e) => setNewNode({ ...newNode, event_timestamp: e.target.value })} className="w-full p-3 rounded-[20px] text-t1 font-mono outline-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Evidence Category</label>
-                <select value={newNode.evidence_type} onChange={(e) => setNewNode({ ...newNode, evidence_type: e.target.value })} className="w-full p-3 rounded-[20px] text-[color:var(--color-text1)] outline-none cursor-pointer" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
+                <select value={newNode.evidence_type} onChange={(e) => setNewNode({ ...newNode, evidence_type: e.target.value })} className="w-full p-3 rounded-[20px] text-t1 outline-none cursor-pointer" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
                   <option value="CCTV" style={{ background: "#09090B" }}>🎥 CCTV Footage</option>
                   <option value="CALL_LOG" style={{ background: "#09090B" }}>📞 Hotline Call Log</option>
                   <option value="POLICE_REPORT" style={{ background: "#09090B" }}>🚓 Officer Incident Report</option>
@@ -313,11 +313,11 @@ export default function TimelineBuilderPage() {
             </div>
             <div>
               <label className="font-semibold block mb-1.5 text-[12px]" style={{ color: P.text2 }}>Detailed Summary & Forensic Note</label>
-              <textarea placeholder="Enter detailed observation notes..." value={newNode.description} onChange={(e) => setNewNode({ ...newNode, description: e.target.value })} className="w-full p-3 rounded-[20px] text-[color:var(--color-text1)] text-[13px] h-24 resize-none outline-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+              <textarea placeholder="Enter detailed observation notes..." value={newNode.description} onChange={(e) => setNewNode({ ...newNode, description: e.target.value })} className="w-full p-3 rounded-[20px] text-t1 text-[13px] h-24 resize-none outline-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
             </div>
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setShowAddForm(false)} className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold hover:bg-white/5 transition-all" style={{ color: P.text2 }}>Cancel</button>
-              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-[color:var(--color-text1)] transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.blue}, #3B82F6)` }}>Commit Node</button>
+              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.blue}, #3B82F6)` }}>Commit Node</button>
             </div>
           </form>
         </Reveal>
@@ -330,7 +330,7 @@ export default function TimelineBuilderPage() {
             <Reveal>
               <div className="glass-panel p-12 text-center rounded-[28px]">
                 <AlertCircle className="w-10 h-10 mx-auto mb-3" style={{ color: P.text3 }} />
-                <h3 className="text-base font-bold text-[color:var(--color-text1)] mb-1">No Evidence Logs Recorded Yet</h3>
+                <h3 className="text-base font-bold text-t1 mb-1">No Evidence Logs Recorded Yet</h3>
                 <p className="text-[13px] text-[#A1A1AA] max-w-sm mx-auto">Click "Add Log Marker" above to begin building the timeline.</p>
               </div>
             </Reveal>
@@ -349,7 +349,7 @@ export default function TimelineBuilderPage() {
                             {getEvidenceIcon(node.evidence_type)}
                           </div>
                           <div>
-                            <h3 className="text-[15px] font-bold text-[color:var(--color-text1)] leading-tight">{node.title}</h3>
+                            <h3 className="text-[15px] font-bold text-t1 leading-tight">{node.title}</h3>
                             <span className="text-[11px] font-mono flex items-center gap-1.5 mt-0.5" style={{ color: P.text2 }}><Clock className="w-3 h-3" style={{ color: P.violet }} />{node.event_timestamp}</span>
                           </div>
                         </div>
@@ -377,7 +377,7 @@ export default function TimelineBuilderPage() {
         <div className="space-y-6">
           <Reveal>
             <div>
-              <h3 className="text-[16px] font-bold text-[color:var(--color-text1)] flex items-center gap-2 mb-1">
+              <h3 className="text-[16px] font-bold text-t1 flex items-center gap-2 mb-1">
                 <Database className="w-4 h-4" style={{ color: P.coral }} /> SQLite Case Datasets
               </h3>
               <p className="text-[13px] font-light text-[#A1A1AA]">Archived datasets synced into KAAVAL's active RAG intelligence memory.</p>
@@ -387,7 +387,7 @@ export default function TimelineBuilderPage() {
             <Reveal delay={100}>
               <div className="glass-panel p-12 text-center rounded-[28px]">
                 <Database className="w-10 h-10 mx-auto mb-3" style={{ color: P.text3 }} />
-                <h3 className="text-base font-bold text-[color:var(--color-text1)] mb-1">No Stored Case Datasets Yet</h3>
+                <h3 className="text-base font-bold text-t1 mb-1">No Stored Case Datasets Yet</h3>
                 <p className="text-[13px] text-[#A1A1AA] max-w-sm mx-auto">Switch to the timeline view and click "Save as Dataset" to archive logs.</p>
               </div>
             </Reveal>
@@ -402,7 +402,7 @@ export default function TimelineBuilderPage() {
                         <span className="px-2.5 py-1 rounded-full font-mono text-[10px] font-bold" style={{ background: `${P.violet}12`, color: P.violet, border: `1px solid ${P.violet}30` }}>{ds.case_id}</span>
                         <span className="text-[10px] font-mono" style={{ color: P.text3 }}>{ds.created_at?.slice(0, 10) || "Today"}</span>
                       </div>
-                      <h4 className="text-[15px] font-bold text-[color:var(--color-text1)]">{ds.dataset_name}</h4>
+                      <h4 className="text-[15px] font-bold text-t1">{ds.dataset_name}</h4>
                       <p className="text-[13px] font-light leading-relaxed" style={{ color: P.text2 }}>{ds.source}</p>
                     </div>
                     <div className="flex items-center justify-between pt-4 mt-4 text-[12px]" style={{ borderTop: `1px solid ${P.border}` }}>
@@ -421,17 +421,17 @@ export default function TimelineBuilderPage() {
       {showNewCaseModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200" style={{ background: "rgba(10,1,24,0.85)", backdropFilter: "blur(12px)" }}>
           <form onSubmit={handleCreateCase} className="glass-panel-heavy p-8 rounded-3xl max-w-lg w-full space-y-5">
-            <h3 className="text-xl font-bold text-[color:var(--color-text1)] flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
+            <h3 className="text-xl font-bold text-t1 flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
               <FolderPlus className="w-5 h-5" style={{ color: P.violet }} /> Register New Investigation Case
             </h3>
             <div className="grid grid-cols-2 gap-4 text-[12px]">
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Case ID</label>
-                <input type="text" value={newCase.case_id} onChange={(e) => setNewCase({ ...newCase, case_id: e.target.value })} className="w-full p-3 rounded-[20px] font-mono outline-none text-[color:var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" value={newCase.case_id} onChange={(e) => setNewCase({ ...newCase, case_id: e.target.value })} className="w-full p-3 rounded-[20px] font-mono outline-none text-t1" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Category</label>
-                <select value={newCase.category} onChange={(e) => setNewCase({ ...newCase, category: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)] cursor-pointer" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
+                <select value={newCase.category} onChange={(e) => setNewCase({ ...newCase, category: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-t1 cursor-pointer" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
                   <option value="Armed Robbery" style={{ background: "#09090B" }}>Armed Robbery</option>
                   <option value="Property Crime" style={{ background: "#09090B" }}>Property Crime</option>
                   <option value="Cyber Crime" style={{ background: "#09090B" }}>Cyber Crime</option>
@@ -441,12 +441,12 @@ export default function TimelineBuilderPage() {
             </div>
             <div>
               <label className="font-semibold block mb-1.5 text-[12px]" style={{ color: P.text2 }}>Case Title</label>
-              <input type="text" placeholder="e.g. Brigade Road Jewelry Store Incident" value={newCase.title} onChange={(e) => setNewCase({ ...newCase, title: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)] text-[13px]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+              <input type="text" placeholder="e.g. Brigade Road Jewelry Store Incident" value={newCase.title} onChange={(e) => setNewCase({ ...newCase, title: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-t1 text-[13px]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
             </div>
             <div className="grid grid-cols-2 gap-4 text-[12px]">
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Priority</label>
-                <select value={newCase.priority} onChange={(e) => setNewCase({ ...newCase, priority: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)] cursor-pointer" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
+                <select value={newCase.priority} onChange={(e) => setNewCase({ ...newCase, priority: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-t1 cursor-pointer" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
                   <option value="CRITICAL" style={{ background: "#09090B" }}>CRITICAL</option>
                   <option value="HIGH" style={{ background: "#09090B" }}>HIGH</option>
                   <option value="MEDIUM" style={{ background: "#09090B" }}>MEDIUM</option>
@@ -455,16 +455,16 @@ export default function TimelineBuilderPage() {
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Location / Division</label>
-                <input type="text" value={newCase.location} onChange={(e) => setNewCase({ ...newCase, location: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" value={newCase.location} onChange={(e) => setNewCase({ ...newCase, location: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-t1" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
             </div>
             <div>
               <label className="font-semibold block mb-1.5 text-[12px]" style={{ color: P.text2 }}>Case Brief</label>
-              <textarea placeholder="Initial incident description..." value={newCase.summary} onChange={(e) => setNewCase({ ...newCase, summary: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)] text-[13px] h-20 resize-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+              <textarea placeholder="Initial incident description..." value={newCase.summary} onChange={(e) => setNewCase({ ...newCase, summary: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-t1 text-[13px] h-20 resize-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setShowNewCaseModal(false)} className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold hover:bg-white/5 transition-all" style={{ color: P.text2 }}>Cancel</button>
-              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-[color:var(--color-text1)] transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})` }}>Create Case</button>
+              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})` }}>Create Case</button>
             </div>
           </form>
         </div>
@@ -473,7 +473,7 @@ export default function TimelineBuilderPage() {
       {showSaveDatasetModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200" style={{ background: "rgba(10,1,24,0.85)", backdropFilter: "blur(12px)" }}>
           <form onSubmit={handleSaveDataset} className="glass-panel-heavy p-8 rounded-3xl max-w-md w-full space-y-5">
-            <h3 className="text-xl font-bold text-[color:var(--color-text1)] flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
+            <h3 className="text-xl font-bold text-t1 flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
               <Database className="w-5 h-5" style={{ color: P.coral }} /> Save Dataset
             </h3>
             <p className="text-[13px] font-light leading-relaxed" style={{ color: P.text2 }}>
@@ -481,15 +481,15 @@ export default function TimelineBuilderPage() {
             </p>
             <div>
               <label className="font-semibold block mb-1.5 text-[12px]" style={{ color: P.text2 }}>Dataset Name</label>
-              <input type="text" value={datasetForm.dataset_name} onChange={(e) => setDatasetForm({ ...datasetForm, dataset_name: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)] text-[13px] font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+              <input type="text" value={datasetForm.dataset_name} onChange={(e) => setDatasetForm({ ...datasetForm, dataset_name: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-t1 text-[13px] font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
             </div>
             <div>
               <label className="font-semibold block mb-1.5 text-[12px]" style={{ color: P.text2 }}>Description</label>
-              <textarea value={datasetForm.description} onChange={(e) => setDatasetForm({ ...datasetForm, description: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)] text-[13px] h-20 resize-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
+              <textarea value={datasetForm.description} onChange={(e) => setDatasetForm({ ...datasetForm, description: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-t1 text-[13px] h-20 resize-none" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setShowSaveDatasetModal(false)} className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold hover:bg-white/5 transition-all" style={{ color: P.text2 }}>Cancel</button>
-              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-[color:var(--color-text1)] transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})` }}>Store Dataset</button>
+              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})` }}>Store Dataset</button>
             </div>
           </form>
         </div>

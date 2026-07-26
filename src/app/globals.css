@@ -12,6 +12,9 @@
   /* ═══ Minimalist iOS / One UI Hybrid ═══ */
   --color-background: var(--color-background);
   --color-foreground: var(--color-text1);
+  --color-t1: var(--color-text1);
+  --color-t2: var(--color-text2);
+  --color-t3: var(--color-text3);
 
   --color-card: var(--color-surface);
   --color-card-foreground: var(--color-text1);

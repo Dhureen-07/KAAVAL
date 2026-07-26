@@ -96,7 +96,7 @@ export default function LegalMatcherPage() {
               <Scale className="w-6 h-6 relative z-10" style={{ color: P.blue }} />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[color:var(--color-text1)] leading-tight flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-t1 leading-tight flex items-center gap-3">
                 Legal Auto-Matcher
                 <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border tracking-wide uppercase shadow-lg" style={{ background: `${P.violet}15`, color: P.violet, borderColor: `${P.violet}30` }}>BNS 2024 Reform</span>
               </h1>
@@ -112,7 +112,7 @@ export default function LegalMatcherPage() {
           
           <div className="flex-1 flex flex-col space-y-5">
             <div className="flex items-center justify-between relative z-10">
-              <label className="text-[14px] font-bold text-[color:var(--color-text1)] flex items-center gap-2">
+              <label className="text-[14px] font-bold text-t1 flex items-center gap-2">
                 <FileText className="w-4 h-4" style={{ color: P.blue }} /> Enter Victim Statement / Narrative
               </label>
               <span className="text-[11px] font-mono tracking-wide" style={{ color: P.text3 }}>Auto-detects active statutes</span>
@@ -121,11 +121,11 @@ export default function LegalMatcherPage() {
             <textarea
               value={statement} onChange={(e) => setStatement(e.target.value)}
               placeholder="Describe the incident (e.g. 'Suspect forcibly stole a motorcycle after threatening the driver with a knife at 10 PM near Indiranagar...')"
-              className="w-full flex-1 min-h-[160px] p-5 rounded-[28px] text-[color:var(--color-text1)] outline-none transition-all resize-none text-[13px] font-light relative z-10 leading-relaxed"
+              className="w-full flex-1 min-h-[160px] p-5 rounded-[28px] text-t1 outline-none transition-all resize-none text-[13px] font-light relative z-10 leading-relaxed"
               style={{ background: "#09090B", border: `1px solid ${P.border}`, color: P.text1, boxShadow: "inset 0 4px 20px rgba(0,0,0,0.5)" }}
             />
 
-            <button onClick={() => handleMatch()} disabled={loading || !statement.trim()} className="w-full py-4 rounded-[28px] text-[13px] font-bold text-[color:var(--color-text1)] transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2 relative z-10" style={{ background: `linear-gradient(135deg, ${P.blue}, #3B82F6)`, boxShadow: `0 8px 24px ${P.blue}40` }}>
+            <button onClick={() => handleMatch()} disabled={loading || !statement.trim()} className="w-full py-4 rounded-[28px] text-[13px] font-bold text-t1 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] shadow-lg flex items-center justify-center gap-2 relative z-10" style={{ background: `linear-gradient(135deg, ${P.blue}, #3B82F6)`, boxShadow: `0 8px 24px ${P.blue}40` }}>
               {loading ? (
                 <><div className="w-4 h-4 border-2 border-t-white rounded-full animate-spin" style={{ borderColor: "rgba(255,255,255,0.3)" }} /> <span>Analyzing Legal Statutes...</span></>
               ) : (
@@ -141,7 +141,7 @@ export default function LegalMatcherPage() {
                 <button key={i} onClick={() => { setStatement(sc.text); handleMatch(sc.text) }} className="px-4 py-3 rounded-[20px] text-left transition-all hover:translate-x-1 group flex items-center justify-between" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${P.border}` }}>
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" style={{ color: P.blue }} />
-                    <span className="text-[12px] font-medium text-[color:var(--color-text1)] group-hover:text-blue-400 transition-colors">{sc.label}</span>
+                    <span className="text-[12px] font-medium text-t1 group-hover:text-blue-400 transition-colors">{sc.label}</span>
                   </div>
                   <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" style={{ color: P.blue }} />
                 </button>
@@ -156,7 +156,7 @@ export default function LegalMatcherPage() {
       {searched && (
         <Reveal delay={150}>
           <div className="space-y-5">
-            <h2 className="text-[16px] font-bold text-[color:var(--color-text1)] flex items-center gap-2 border-b pb-4" style={{ borderColor: P.border }}>
+            <h2 className="text-[16px] font-bold text-t1 flex items-center gap-2 border-b pb-4" style={{ borderColor: P.border }}>
               <BookOpen className="w-5 h-5" style={{ color: P.blue }} /> Matched Statutory Provisions ({results.length})
             </h2>
 
@@ -174,7 +174,7 @@ export default function LegalMatcherPage() {
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-5 mb-5 relative z-10" style={{ borderColor: P.border }}>
                         <div>
                           <span className="text-[10px] font-mono font-bold uppercase tracking-widest block mb-1" style={{ color: P.blue }}>{res.category}</span>
-                          <h3 className="text-xl sm:text-2xl font-extrabold text-[color:var(--color-text1)] leading-tight">{res.offense_title}</h3>
+                          <h3 className="text-xl sm:text-2xl font-extrabold text-t1 leading-tight">{res.offense_title}</h3>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           <span className="px-4 py-2 rounded-full font-mono text-[12px] font-bold shadow-lg" style={{ background: `${P.blue}15`, color: P.blue, border: `1px solid ${P.blue}40` }}>{res.bns_section}</span>
@@ -205,7 +205,7 @@ export default function LegalMatcherPage() {
                         <ShieldAlert className="w-6 h-6 shrink-0 mt-0.5" style={{ color: P.blue }} />
                         <div>
                           <p className="text-[12px] font-bold uppercase tracking-wider mb-1" style={{ color: P.blue }}>Mandatory Officer SOP / Action Step:</p>
-                          <p className="text-[14px] font-medium text-[color:var(--color-text1)] leading-relaxed">{res.mandatory_action}</p>
+                          <p className="text-[14px] font-medium text-t1 leading-relaxed">{res.mandatory_action}</p>
                         </div>
                       </div>
                     </div>

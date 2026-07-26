@@ -25,7 +25,7 @@ export default function AnalyticsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Crime Analytics</h1>
-        <p className="text-[color:var(--color-text2)] mt-1">Deep dive into statewide crime statistics and historical data.</p>
+        <p className="text-t2 mt-1">Deep dive into statewide crime statistics and historical data.</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">

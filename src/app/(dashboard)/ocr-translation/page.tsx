@@ -180,11 +180,11 @@ export default function OcrTranslationPage() {
       {/* Header */}
       <div className="mb-2 flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-[color:var(--color-text1)] flex items-center gap-3 animate-in fade-in slide-in-from-left duration-500">
+          <h1 className="text-3xl font-bold tracking-tight text-t1 flex items-center gap-3 animate-in fade-in slide-in-from-left duration-500">
             <Languages className="w-8 h-8 text-indigo-500" />
             Document OCR & Translation
           </h1>
-          <p className="text-[color:var(--color-text2)] mt-1 text-sm">
+          <p className="text-t2 mt-1 text-sm">
             Scan physical incident logs using TrOCR and translate language contexts using NLLB-200.
           </p>
         </div>
@@ -194,7 +194,7 @@ export default function OcrTranslationPage() {
         {/* Left Hand: Document Upload & OCR */}
         <Card className="lg:col-span-5 glass-panel border-white/10 flex flex-col justify-between overflow-hidden shadow-xl min-h-[500px]">
           <CardHeader className="border-b border-white/5 bg-white/5">
-            <CardTitle className="text-lg text-[color:var(--color-text1)] flex items-center gap-2">
+            <CardTitle className="text-lg text-t1 flex items-center gap-2">
               <ImageIcon className="w-5 h-5 text-indigo-400" />
               Document Input
             </CardTitle>
@@ -233,12 +233,12 @@ export default function OcrTranslationPage() {
                   />
                   <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 flex flex-col items-center justify-center gap-2 transition-opacity duration-200">
                     <Upload className="w-8 h-8 text-indigo-400" />
-                    <p className="text-xs font-bold text-[color:var(--color-text1)] uppercase tracking-wider">Replace Image</p>
+                    <p className="text-xs font-bold text-t1 uppercase tracking-wider">Replace Image</p>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-3">
-                  <div className="w-12 h-12 rounded-[20px] bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-[color:var(--color-text1)] transition-colors">
+                  <div className="w-12 h-12 rounded-[20px] bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-t1 transition-colors">
                     <Upload className="w-6 h-6" />
                   </div>
                   <div>
@@ -272,7 +272,7 @@ export default function OcrTranslationPage() {
             <Button
               onClick={runOcr}
               disabled={!image || isOcrLoading}
-              className="w-full shadow-lg bg-indigo-600 hover:bg-indigo-500 disabled:bg-zinc-800 text-[color:var(--color-text1)] py-5 rounded-[20px] text-sm font-semibold flex items-center justify-center gap-2 border border-indigo-500/30"
+              className="w-full shadow-lg bg-indigo-600 hover:bg-indigo-500 disabled:bg-zinc-800 text-t1 py-5 rounded-[20px] text-sm font-semibold flex items-center justify-center gap-2 border border-indigo-500/30"
             >
               {isOcrLoading ? (
                 <>
@@ -295,7 +295,7 @@ export default function OcrTranslationPage() {
           <Card className="glass-panel border-white/10 flex flex-col shadow-xl">
             <CardHeader className="border-b border-white/5 bg-white/5 flex flex-row items-center justify-between py-4">
               <div>
-                <CardTitle className="text-lg text-[color:var(--color-text1)] flex items-center gap-2">
+                <CardTitle className="text-lg text-t1 flex items-center gap-2">
                   <FileText className="w-5 h-5 text-indigo-400" />
                   Extracted Text Context
                 </CardTitle>
@@ -308,7 +308,7 @@ export default function OcrTranslationPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleCopy(ocrText, "ocr")}
-                  className="text-zinc-400 hover:text-[color:var(--color-text1)]"
+                  className="text-zinc-400 hover:text-t1"
                 >
                   {copiedText === "ocr" ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                 </Button>
@@ -346,7 +346,7 @@ export default function OcrTranslationPage() {
                 <Button
                   onClick={runTranslation}
                   disabled={!ocrText || isTranslateLoading}
-                  className="sm:self-end bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-800 text-[color:var(--color-text1)] font-medium text-xs flex items-center justify-center gap-2 py-5 rounded-lg border border-emerald-500/30"
+                  className="sm:self-end bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-800 text-t1 font-medium text-xs flex items-center justify-center gap-2 py-5 rounded-lg border border-emerald-500/30"
                 >
                   {isTranslateLoading ? (
                     <>
@@ -368,7 +368,7 @@ export default function OcrTranslationPage() {
           <Card className="glass-panel border-white/10 flex flex-col shadow-xl">
             <CardHeader className="border-b border-white/5 bg-white/5 flex flex-row items-center justify-between py-4">
               <div>
-                <CardTitle className="text-lg text-[color:var(--color-text1)] flex items-center gap-2">
+                <CardTitle className="text-lg text-t1 flex items-center gap-2">
                   <Languages className="w-5 h-5 text-indigo-400" />
                   Translated Context Output
                 </CardTitle>
@@ -378,7 +378,7 @@ export default function OcrTranslationPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleCopy(translatedText, "trans")}
-                  className="text-zinc-400 hover:text-[color:var(--color-text1)]"
+                  className="text-zinc-400 hover:text-t1"
                 >
                   {copiedText === "trans" ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                 </Button>
@@ -406,7 +406,7 @@ export default function OcrTranslationPage() {
                   size="sm"
                   onClick={() => sendToAssistant(ocrText)}
                   disabled={!ocrText}
-                  className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold border-white/10 text-zinc-300 hover:text-[color:var(--color-text1)]"
+                  className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold border-white/10 text-zinc-300 hover:text-t1"
                 >
                   <Send className="w-3.5 h-3.5 text-indigo-400" />
                   Import OCR to Assistant
@@ -417,7 +417,7 @@ export default function OcrTranslationPage() {
                   size="sm"
                   onClick={() => sendToAssistant(translatedText)}
                   disabled={!translatedText}
-                  className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold border-white/10 text-zinc-300 hover:text-[color:var(--color-text1)]"
+                  className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold border-white/10 text-zinc-300 hover:text-t1"
                 >
                   <Send className="w-3.5 h-3.5 text-emerald-400" />
                   Import Translation to Assistant
@@ -428,7 +428,7 @@ export default function OcrTranslationPage() {
                   size="sm"
                   onClick={draftFir}
                   disabled={!ocrText || isFirLoading}
-                  className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold border-white/10 text-zinc-300 hover:text-[color:var(--color-text1)]"
+                  className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold border-white/10 text-zinc-300 hover:text-t1"
                 >
                   {isFirLoading ? (
                     <RefreshCw className="w-3.5 h-3.5 animate-spin" />
@@ -445,7 +445,7 @@ export default function OcrTranslationPage() {
           {draftedFir && (
             <Card className="glass-panel border-white/10 flex flex-col overflow-hidden shadow-xl animate-in fade-in slide-in-from-bottom-2 duration-300">
               <CardHeader className="border-b border-white/5 bg-white/5 flex flex-row items-center justify-between py-4">
-                <CardTitle className="text-sm font-bold text-[color:var(--color-text1)] tracking-wide uppercase flex items-center gap-2">
+                <CardTitle className="text-sm font-bold text-t1 tracking-wide uppercase flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-amber-400" />
                   Drafted Legal FIR Document
                 </CardTitle>
@@ -453,7 +453,7 @@ export default function OcrTranslationPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleCopy(draftedFir, "fir")}
-                  className="text-zinc-400 hover:text-[color:var(--color-text1)]"
+                  className="text-zinc-400 hover:text-t1"
                 >
                   {copiedText === "fir" ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                 </Button>

@@ -107,7 +107,7 @@ export default function VoiceToFIRPage() {
               <Mic className="w-6 h-6 relative z-10" style={{ color: P.coral }} />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[color:var(--color-text1)] leading-tight flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-t1 leading-tight flex items-center gap-3">
                 Voice-to-FIR
                 <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border tracking-wide uppercase shadow-lg" style={{ background: `${P.violet}15`, color: P.violet, borderColor: `${P.violet}30` }}>AI Draft</span>
               </h1>
@@ -133,7 +133,7 @@ export default function VoiceToFIRPage() {
           <div className="glass-panel flex-1 rounded-3xl flex flex-col relative overflow-hidden border" style={{ borderColor: P.border, background: P.surface }}>
             {/* Header */}
             <div className="px-6 py-4 flex items-center justify-between border-b relative z-10" style={{ borderColor: P.border, background: "rgba(0,0,0,0.2)" }}>
-              <span className="text-[13px] font-bold text-[color:var(--color-text1)] flex items-center gap-2">
+              <span className="text-[13px] font-bold text-t1 flex items-center gap-2">
                 <Mic className="w-4 h-4" style={{ color: P.coral }} /> Live Dictation
               </span>
               {isRecording && (
@@ -153,7 +153,7 @@ export default function VoiceToFIRPage() {
               )}
               
               <button onClick={handleToggleRecord} className="w-32 h-32 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl relative z-10 hover:scale-105" style={{ background: isRecording ? `linear-gradient(135deg, ${P.red}, #E11D48)` : `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})`, boxShadow: isRecording ? `0 0 50px ${P.red}60` : `0 0 40px ${P.coral}40` }}>
-                {isRecording ? <Square className="w-10 h-10 text-[color:var(--color-text1)]" /> : <Mic className="w-12 h-12 text-[color:var(--color-text1)]" />}
+                {isRecording ? <Square className="w-10 h-10 text-t1" /> : <Mic className="w-12 h-12 text-t1" />}
               </button>
               
               <p className="mt-8 font-medium text-center text-[14px]" style={{ color: P.text1 }}>
@@ -175,7 +175,7 @@ export default function VoiceToFIRPage() {
             {/* Header */}
             <div className="px-6 py-4 flex items-center gap-2 border-b relative z-10" style={{ borderColor: P.border, background: "rgba(0,0,0,0.2)" }}>
               <FileText className="w-4 h-4" style={{ color: P.violet }} />
-              <span className="text-[13px] font-bold text-[color:var(--color-text1)]">Generated Legal Draft</span>
+              <span className="text-[13px] font-bold text-t1">Generated Legal Draft</span>
             </div>
 
             {/* Content */}
@@ -186,7 +186,7 @@ export default function VoiceToFIRPage() {
                     <Loader2 className="w-12 h-12 animate-spin" style={{ color: P.violet }} />
                     <Zap className="w-5 h-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ color: P.coral }} />
                   </div>
-                  <h3 className="text-[16px] font-bold text-[color:var(--color-text1)]">Synthesizing Legal Document...</h3>
+                  <h3 className="text-[16px] font-bold text-t1">Synthesizing Legal Document...</h3>
                   <p className="text-[12px] font-light mt-2" style={{ color: P.text2 }}>Extracting entities and formatting via Intelligence Engine</p>
                 </div>
               ) : draftedFIR ? (
@@ -212,7 +212,7 @@ export default function VoiceToFIRPage() {
                   <button className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold transition-all hover:bg-white/10 flex items-center gap-2" style={{ color: P.text1, border: `1px solid ${P.border}` }}>
                     <Copy className="w-4 h-4" /> Copy Text
                   </button>
-                  <button className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-[color:var(--color-text1)] transition-all hover:scale-105 flex items-center gap-2 shadow-lg" style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})`, boxShadow: `0 8px 24px ${P.violet}40` }}>
+                  <button className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105 flex items-center gap-2 shadow-lg" style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})`, boxShadow: `0 8px 24px ${P.violet}40` }}>
                     <CheckCircle2 className="w-4 h-4" /> Approve & Submit
                   </button>
                 </div>

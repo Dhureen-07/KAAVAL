@@ -16,7 +16,7 @@ export default function ReportsPage() {
       <div className="mb-2 flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Official Reports</h1>
-          <p className="text-[color:var(--color-text2)] mt-1">Access generated FIRs and Intelligence Dossiers.</p>
+          <p className="text-t2 mt-1">Access generated FIRs and Intelligence Dossiers.</p>
         </div>
         <button className="px-4 py-2 bg-primary/20 text-primary hover:bg-primary/30 rounded-md text-sm font-medium transition-colors flex items-center gap-2 border border-primary/30">
           <Download className="w-4 h-4" /> Export Batch
@@ -28,17 +28,17 @@ export default function ReportsPage() {
           <CardTitle className="text-lg">Document Archive</CardTitle>
           <div className="flex items-center gap-2">
             <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[color:var(--color-text2)]" />
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-t2" />
               <input type="text" placeholder="Search ID or Keyword..." className="bg-background/50 border border-border rounded-full pl-9 pr-4 py-1.5 text-sm focus:outline-none focus:border-primary" />
             </div>
             <button className="p-2 border border-border rounded-md hover:bg-background transition-colors">
-              <Filter className="w-4 h-4 text-[color:var(--color-text2)]" />
+              <Filter className="w-4 h-4 text-t2" />
             </button>
           </div>
         </CardHeader>
         <CardContent className="p-0 flex-1 overflow-y-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-[color:var(--color-text2)] uppercase bg-card/30 border-b border-border/50">
+            <thead className="text-xs text-t2 uppercase bg-card/30 border-b border-border/50">
               <tr>
                 <th className="px-6 py-4 font-medium">Document ID</th>
                 <th className="px-6 py-4 font-medium">Category</th>
@@ -54,11 +54,11 @@ export default function ReportsPage() {
                     <FileText className="w-4 h-4" /> {report.id}
                   </td>
                   <td className="px-6 py-4">{report.type}</td>
-                  <td className="px-6 py-4 text-[color:var(--color-text2)]">{report.location}</td>
+                  <td className="px-6 py-4 text-t2">{report.location}</td>
                   <td className="px-6 py-4 font-mono text-xs">{report.date}</td>
                   <td className="px-6 py-4 text-right">
                     <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                      report.status === 'Active' ? 'bg-warning/20 text-warning border border-warning/30' : 'bg-muted text-[color:var(--color-text2)] border border-border'
+                      report.status === 'Active' ? 'bg-warning/20 text-warning border border-warning/30' : 'bg-muted text-t2 border border-border'
                     }`}>
                       {report.status}
                     </span>
