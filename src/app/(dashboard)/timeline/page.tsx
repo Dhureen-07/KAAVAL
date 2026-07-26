@@ -91,7 +91,7 @@ export default function TimelineBuilderPage() {
 
   const fetchCases = async () => {
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/cases")
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/cases")
       if (res.ok) { const data = await res.json(); if (data.cases?.length) setCases(data.cases) }
     } catch (e) {
       setCases([
@@ -105,7 +105,7 @@ export default function TimelineBuilderPage() {
   const fetchTimeline = async (cId: string) => {
     setLoading(true)
     try {
-      const res = await fetch(`https://kaaval-backend-yo59.onrender.com/api/timelines?case_id=${cId}`)
+      const res = await fetch(`https://kaaval-backend-50044365217.development.catalystappsail.in/api/timelines?case_id=${cId}`)
       if (res.ok) { const data = await res.json(); setTimeline(data.timeline || []) }
     } catch (e) {
       setTimeline([
@@ -119,7 +119,7 @@ export default function TimelineBuilderPage() {
 
   const fetchDatasets = async () => {
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/cases/datasets")
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/cases/datasets")
       if (res.ok) { const data = await res.json(); setDatasets(data.datasets || []) }
     } catch (e) {}
   }
@@ -130,7 +130,7 @@ export default function TimelineBuilderPage() {
   const handleAddNode = async (e: React.FormEvent) => {
     e.preventDefault(); if (!newNode.title.trim()) return
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/timelines", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...newNode, case_id: selectedCaseId }) })
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/timelines", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...newNode, case_id: selectedCaseId }) })
       if (res.ok) {
         setShowAddForm(false)
         setNewNode({ title: "", event_timestamp: new Date().toISOString().slice(0, 16).replace("T", " "), description: "", evidence_type: "CCTV" })
@@ -147,7 +147,7 @@ export default function TimelineBuilderPage() {
   const handleCreateCase = async (e: React.FormEvent) => {
     e.preventDefault(); if (!newCase.title.trim()) return
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/cases", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(newCase) })
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/cases", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(newCase) })
       if (res.ok) {
         setShowNewCaseModal(false); fetchCases(); setSelectedCaseId(newCase.case_id); showToast(`New case ${newCase.case_id} registered!`)
         setNewCase({ case_id: `CASE-2026-${Math.floor(100 + Math.random() * 900)}`, title: "", category: "Property Crime", priority: "HIGH", status: "OPEN", location: "Bengaluru City", assigned_officer: "Inspector V. Rao", summary: "" })
@@ -158,7 +158,7 @@ export default function TimelineBuilderPage() {
   const handleSaveDataset = async (e: React.FormEvent) => {
     e.preventDefault(); if (!datasetForm.dataset_name.trim()) return
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/cases/datasets", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ dataset_name: datasetForm.dataset_name, case_id: selectedCaseId, description: datasetForm.description }) })
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/cases/datasets", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ dataset_name: datasetForm.dataset_name, case_id: selectedCaseId, description: datasetForm.description }) })
       if (res.ok) {
         setShowSaveDatasetModal(false); fetchDatasets(); showToast(`Dataset "${datasetForm.dataset_name}" stored in kaaval.db & RAG pool!`)
         setDatasetForm({ dataset_name: "", description: "" })
@@ -169,7 +169,7 @@ export default function TimelineBuilderPage() {
   const handleDeleteNode = async (id?: number) => {
     if (!id) return
     try {
-      await fetch(`https://kaaval-backend-yo59.onrender.com/api/timelines/${id}`, { method: "DELETE" })
+      await fetch(`https://kaaval-backend-50044365217.development.catalystappsail.in/api/timelines/${id}`, { method: "DELETE" })
       fetchTimeline(selectedCaseId)
       showToast("Log marker removed.")
     } catch (e) { setTimeline(timeline.filter((t) => t.id !== id)) }

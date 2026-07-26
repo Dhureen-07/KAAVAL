@@ -65,7 +65,7 @@ export default function LegalMatcherPage() {
     setLoading(true); setSearched(true)
 
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/legal/match-section", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ statement: textToSubmit }) })
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/legal/match-section", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ statement: textToSubmit }) })
       if (res.ok) { 
         const data = await res.json(); 
         setResults(data.matched_sections || [])

@@ -93,7 +93,7 @@ export default function OcrTranslationPage() {
     setOcrWarning(null)
     
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/intelligence/ocr", {
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/intelligence/ocr", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -121,7 +121,7 @@ export default function OcrTranslationPage() {
     setTranslateWarning(null)
     
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/intelligence/translate", {
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/intelligence/translate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -148,7 +148,7 @@ export default function OcrTranslationPage() {
     setIsFirLoading(true)
     
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/intelligence/draft-fir", {
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/intelligence/draft-fir", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

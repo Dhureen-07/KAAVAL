@@ -60,7 +60,7 @@ export default function ANPRScannerPage() {
 
   const fetchAllVehicles = async () => {
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/vehicles")
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/vehicles")
       if (res.ok) { const data = await res.json(); setAllVehicles(data.vehicles || []) }
     } catch (e) {}
   }
@@ -71,7 +71,7 @@ export default function ANPRScannerPage() {
     const targetPlate = plateToSearch || plateInput; if (!targetPlate.trim()) return
     setLoading(true)
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/vehicle/anpr-lookup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plate_number: targetPlate }) })
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/vehicle/anpr-lookup", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ plate_number: targetPlate }) })
       if (res.ok) { 
         const data = await res.json(); 
         setResult(data.vehicle);
@@ -93,7 +93,7 @@ export default function ANPRScannerPage() {
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault(); if (!newVehicle.plate_number) return
     try {
-      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/vehicles", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(newVehicle) })
+      const res = await fetch("https://kaaval-backend-50044365217.development.catalystappsail.in/api/vehicles", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(newVehicle) })
       if (res.ok) {
         setShowAddForm(false); 
         setNewVehicle({ plate_number: "", owner_name: "", vehicle_model: "", color: "Black", status: "WANTED", crime_reference: "", last_seen_location: "Bengaluru" }); 
