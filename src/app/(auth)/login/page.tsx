@@ -52,7 +52,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex flex-col pt-4">
           <Link href="/dashboard" className="w-full">
-            <Button className="w-full bg-primary hover:bg-primary/90 text-[var(--color-text1)] font-medium">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-foreground font-medium">
               Authenticate
             </Button>
           </Link>

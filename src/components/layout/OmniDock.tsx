@@ -36,7 +36,7 @@ export function OmniDock() {
               
               {/* Tooltip */}
               <div className="absolute -top-12 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-200 scale-95 group-hover:scale-100 z-50">
-                <div className="px-3 py-1.5 rounded-lg text-[11px] font-bold text-[var(--color-text1)] whitespace-nowrap shadow-xl border border-white/10" style={{ background: "rgba(24,24,27,0.95)", backdropFilter: "blur(10px)" }}>
+                <div className="px-3 py-1.5 rounded-lg text-[11px] font-bold text-foreground whitespace-nowrap shadow-xl border border-white/10" style={{ background: "rgba(24,24,27,0.95)", backdropFilter: "blur(10px)" }}>
                   {item.title}
                 </div>
               </div>
@@ -55,7 +55,7 @@ export function OmniDock() {
               >
                 <item.icon 
                   strokeWidth={isActive ? 2.5 : 2} 
-                  className={`transition-all duration-300 ${isActive ? "w-5 h-5 sm:w-5 sm:h-5 text-[#007AFF]" : "w-5 h-5 sm:w-5 sm:h-5 text-[var(--color-text2)] group-hover:text-[var(--color-text1)]"}`} 
+                  className={`transition-all duration-300 ${isActive ? "w-5 h-5 sm:w-5 sm:h-5 text-[#007AFF]" : "w-5 h-5 sm:w-5 sm:h-5 text-muted-foreground group-hover:text-foreground"}`} 
                 />
               </div>
               

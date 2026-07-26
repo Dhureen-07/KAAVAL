@@ -33,7 +33,7 @@ export default function NetworkPage() {
         <div className="absolute inset-0 flex items-center justify-center">
             <div className="z-10 flex flex-col items-center justify-center bg-black/50 backdrop-blur-md border border-white/10 p-8 rounded-[28px] mx-4 text-center">
                 <Activity className="w-12 h-12 text-primary mb-4 animate-spin-slow" />
-                <h2 className="text-xl font-bold text-[var(--color-text1)] mb-2">Analyzing Node Connections...</h2>
+                <h2 className="text-xl font-bold text-foreground mb-2">Analyzing Node Connections...</h2>
                 <p className="text-muted-foreground text-sm max-w-sm">
                     Cross-referencing telecom data and FIR records to construct criminal syndicate graphs.
                 </p>

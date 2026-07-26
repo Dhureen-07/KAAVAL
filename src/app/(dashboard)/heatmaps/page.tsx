@@ -26,7 +26,7 @@ export default function HeatmapsPage() {
             
             <div className="z-10 flex flex-col items-center justify-center bg-black/50 backdrop-blur-md border border-white/10 p-8 rounded-[28px] mx-4 text-center">
                 <MapPin className="w-12 h-12 text-primary mb-4 animate-bounce" />
-                <h2 className="text-xl font-bold text-[var(--color-text1)] mb-2">Map Engine Initializing...</h2>
+                <h2 className="text-xl font-bold text-foreground mb-2">Map Engine Initializing...</h2>
                 <p className="text-muted-foreground text-sm max-w-sm">
                     Connecting to Karnataka State Police Geospatial Database to render high-resolution 3D heatmaps.
                 </p>

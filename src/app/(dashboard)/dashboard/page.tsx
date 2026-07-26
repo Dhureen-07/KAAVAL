@@ -141,7 +141,7 @@ export default function DashboardPage() {
               </div>
               <span className="text-[12px] font-mono text-[#71717A]">{currentTime || "—"}</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--color-text1)] leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground leading-tight">
               Command Center
             </h1>
             <p className="text-[14px] mt-1.5 font-light text-[#A1A1AA]">
@@ -193,7 +193,7 @@ export default function DashboardPage() {
                   <m.icon className="w-4 h-4" style={{ color: m.color }} />
                 </div>
               </div>
-              <div className="relative text-[1.75rem] font-bold text-[var(--color-text1)] tracking-tight mb-1">{m.value}</div>
+              <div className="relative text-[1.75rem] font-bold text-foreground tracking-tight mb-1">{m.value}</div>
               <p className="relative text-[11px] font-medium flex items-center gap-1" style={{ color: m.color }}>
                 <m.subIcon className="w-3 h-3" /> {m.sub}
               </p>
@@ -211,7 +211,7 @@ export default function DashboardPage() {
             <div className="glass-panel p-6 rounded-[28px]">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
                 <div>
-                  <h3 className="text-[15px] font-semibold text-[var(--color-text1)] flex items-center gap-2">
+                  <h3 className="text-[15px] font-semibold text-foreground flex items-center gap-2">
                     <Activity className="w-4 h-4" style={{ color: P.coral }} />
                     District Crime Severity
                   </h3>
@@ -243,7 +243,7 @@ export default function DashboardPage() {
                   <Reveal key={item.district} delay={i * 70}>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-[12px]">
-                        <span className="font-semibold text-[var(--color-text1)] flex items-center gap-2">
+                        <span className="font-semibold text-foreground flex items-center gap-2">
                           <span className="w-2 h-2 rounded-full" style={{ background: item.color }} />
                           {item.district}
                         </span>
@@ -282,7 +282,7 @@ export default function DashboardPage() {
                     >
                       <q.icon className="w-4 h-4" style={{ color: q.color }} />
                     </div>
-                    <span className="relative text-[12px] font-semibold text-[var(--color-text1)] block">{q.title}</span>
+                    <span className="relative text-[12px] font-semibold text-foreground block">{q.title}</span>
                   </div>
                 </Link>
               </Reveal>
@@ -296,7 +296,7 @@ export default function DashboardPage() {
             <div className="glass-panel p-5 rounded-[28px]">
               <div className="flex items-center justify-between mb-5 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
                 <div>
-                  <h3 className="text-[15px] font-semibold text-[var(--color-text1)] flex items-center gap-2">
+                  <h3 className="text-[15px] font-semibold text-foreground flex items-center gap-2">
                     <Siren className="w-4 h-4 animate-pulse" style={{ color: P.red }} />
                     Emergency Alerts
                   </h3>
@@ -330,7 +330,7 @@ export default function DashboardPage() {
                         </span>
                       </div>
 
-                      <h4 className="text-[13px] font-semibold text-[var(--color-text1)] mb-2 leading-snug">{inc.title}</h4>
+                      <h4 className="text-[13px] font-semibold text-foreground mb-2 leading-snug">{inc.title}</h4>
 
                       <div className="flex items-center justify-between text-[11px] mb-3 text-[#A1A1AA]">
                         <span className="flex items-center gap-1">

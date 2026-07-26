@@ -26,7 +26,7 @@ export default function PredictivePage() {
         <div className="absolute inset-0 flex items-center justify-center">
             <div className="z-10 flex flex-col items-center justify-center bg-black/50 backdrop-blur-md border border-white/10 p-8 rounded-[28px] mx-4 text-center">
                 <BarChart className="w-12 h-12 text-primary mb-4 animate-pulse" />
-                <h2 className="text-xl font-bold text-[var(--color-text1)] mb-2">Generating Forecast Models...</h2>
+                <h2 className="text-xl font-bold text-foreground mb-2">Generating Forecast Models...</h2>
                 <p className="text-muted-foreground text-sm max-w-sm">
                     Processing 2024 SCRB data through AI models to predict localized anomaly surges for the next 14 days.
                 </p>
