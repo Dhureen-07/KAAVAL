@@ -212,7 +212,7 @@ export default function VoiceToFIRPage() {
                   <button className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold transition-all hover:bg-white/10 flex items-center gap-2" style={{ color: P.text1, border: `1px solid ${P.border}` }}>
                     <Copy className="w-4 h-4" /> Copy Text
                   </button>
-                  <button className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105 flex items-center gap-2 shadow-lg" style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})`, boxShadow: `0 8px 24px ${P.violet}40` }}>
+                  <button className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105 flex items-center gap-2 shadow-lg" style={{ background: P.violet, boxShadow: `0 8px 24px ${P.violet}40` }}>
                     <CheckCircle2 className="w-4 h-4" /> Approve & Submit
                   </button>
                 </div>

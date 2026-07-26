@@ -261,7 +261,7 @@ export default function TimelineBuilderPage() {
       <Reveal delay={150}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
           <div className="flex items-center gap-2 p-1 rounded-[28px] glass-panel">
-            <button onClick={() => setActiveTab("timeline")} className="px-5 py-2.5 rounded-[20px] text-[13px] font-semibold transition-all flex items-center gap-2" style={activeTab === "timeline" ? { background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})`, color: "#fff", boxShadow: `0 4px 16px ${P.violet}40` } : { color: P.text2 }}>
+            <button onClick={() => setActiveTab("timeline")} className="px-5 py-2.5 rounded-[20px] text-[13px] font-semibold transition-all flex items-center gap-2" style={activeTab === "timeline" ? { background: P.violet, color: "#fff", boxShadow: `0 4px 16px ${P.violet}40` } : { color: P.text2 }}>
               <GitCommit className="w-4 h-4" /> Timeline ({timeline.length})
             </button>
             <button onClick={() => setActiveTab("datasets")} className="px-5 py-2.5 rounded-[20px] text-[13px] font-semibold transition-all flex items-center gap-2" style={activeTab === "datasets" ? { background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})`, color: "#fff", boxShadow: `0 4px 16px ${P.coral}40` } : { color: P.text2 }}>
@@ -464,7 +464,7 @@ export default function TimelineBuilderPage() {
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setShowNewCaseModal(false)} className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold hover:bg-white/5 transition-all" style={{ color: P.text2 }}>Cancel</button>
-              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})` }}>Create Case</button>
+              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-t1 transition-all hover:scale-105" style={{ background: P.violet }}>Create Case</button>
             </div>
           </form>
         </div>

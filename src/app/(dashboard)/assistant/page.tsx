@@ -242,7 +242,7 @@ export default function AssistantPage() {
                     onClick={handleSend}
                     disabled={isLoading || !input.trim()}
                     className="p-2.5 rounded-[20px] text-t1 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
-                    style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})`, boxShadow: `0 4px 16px ${P.violet}40` }}
+                    style={{ background: P.violet, boxShadow: `0 4px 16px ${P.violet}40` }}
                   >
                     <Send className="w-5 h-5" />
                   </button>

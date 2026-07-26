@@ -228,7 +228,7 @@ export default function DashboardPage() {
                       className="px-3 py-1.5 rounded-md text-[11px] font-semibold capitalize transition-all duration-300"
                       style={
                         activeCategory === cat
-                          ? { background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})`, color: "#fff", boxShadow: `0 2px 12px ${P.violet}30` }
+                          ? { background: P.violet, color: "#fff", boxShadow: `0 2px 12px ${P.violet}30` }
                           : { color: P.text2 }
                       }
                     >
