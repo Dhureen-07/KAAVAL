@@ -8,7 +8,7 @@ export default function SettingsPage() {
     <div className="flex flex-col gap-6 max-w-4xl mx-auto w-full">
       <div className="mb-2">
         <h1 className="text-3xl font-bold tracking-tight">System Settings</h1>
-        <p className="text-muted-foreground mt-1">Configure your KAAVAL environment and intelligence preferences.</p>
+        <p className="text-[color:var(--color-text2)] mt-1">Configure your KAAVAL environment and intelligence preferences.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
@@ -23,10 +23,10 @@ export default function SettingsPage() {
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between p-4 rounded-lg bg-card/50 border border-border/50">
               <div className="flex items-center gap-3">
-                <Database className="w-5 h-5 text-muted-foreground" />
+                <Database className="w-5 h-5 text-[color:var(--color-text2)]" />
                 <div>
                   <p className="font-medium">Live SCRB Database Link</p>
-                  <p className="text-sm text-muted-foreground">Pull real-time FIR data across all districts.</p>
+                  <p className="text-sm text-[color:var(--color-text2)]">Pull real-time FIR data across all districts.</p>
                 </div>
               </div>
               <div className="w-12 h-6 bg-primary rounded-full relative cursor-pointer">
@@ -36,10 +36,10 @@ export default function SettingsPage() {
 
             <div className="flex items-center justify-between p-4 rounded-lg bg-card/50 border border-border/50">
               <div className="flex items-center gap-3">
-                <Lock className="w-5 h-5 text-muted-foreground" />
+                <Lock className="w-5 h-5 text-[color:var(--color-text2)]" />
                 <div>
                   <p className="font-medium">Strict Privacy Mode</p>
-                  <p className="text-sm text-muted-foreground">Anonymize citizen names in predictive analytics.</p>
+                  <p className="text-sm text-[color:var(--color-text2)]">Anonymize citizen names in predictive analytics.</p>
                 </div>
               </div>
               <div className="w-12 h-6 bg-primary rounded-full relative cursor-pointer">
@@ -60,10 +60,10 @@ export default function SettingsPage() {
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between p-4 rounded-lg bg-card/50 border border-border/50">
               <div className="flex items-center gap-3">
-                <Bell className="w-5 h-5 text-muted-foreground" />
+                <Bell className="w-5 h-5 text-[color:var(--color-text2)]" />
                 <div>
                   <p className="font-medium">High Priority Push Alerts</p>
-                  <p className="text-sm text-muted-foreground">Receive immediate notifications for predicted hotspots.</p>
+                  <p className="text-sm text-[color:var(--color-text2)]">Receive immediate notifications for predicted hotspots.</p>
                 </div>
               </div>
               <div className="w-12 h-6 bg-primary/20 rounded-full relative cursor-pointer">

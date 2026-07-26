@@ -62,13 +62,14 @@
   }
 
   :root {
+    /* ═══ Apple Minimalist Light Mode ═══ */
     --color-background: #F5F5F7;
-    --color-surface: rgba(255, 255, 255, 0.75);
-    --color-panel: rgba(255, 255, 255, 0.85);
-    --color-border: rgba(255, 255, 255, 0.9);
-    --color-text1: #1D1D1F;
-    --color-text2: #86868B;
-    --color-text3: #D2D2D7;
+    --color-surface: rgba(255, 255, 255, 0.85);
+    --color-panel: rgba(255, 255, 255, 0.95);
+    --color-border: rgba(0, 0, 0, 0.06);
+    --color-text1: #111113;
+    --color-text2: #71717A;
+    --color-text3: rgba(0, 0, 0, 0.25);
     --color-coral: #007AFF;
     --color-coralSoft: #E5F1FF;
     --color-amber: #FF9500;
@@ -80,21 +81,22 @@
   }
 
   .dark {
-    --color-background: #000000;
-    --color-surface: rgba(30, 30, 30, 0.75);
-    --color-panel: rgba(25, 25, 25, 0.85);
-    --color-border: rgba(255, 255, 255, 0.1);
-    --color-text1: #F5F5F7;
-    --color-text2: #86868B;
-    --color-text3: #424245;
-    --color-coral: #0A84FF;
-    --color-coralSoft: #004080;
-    --color-amber: #FF9F0A;
-    --color-violet: #BF5AF2;
-    --color-blue: #0A84FF;
-    --color-green: #32D74B;
-    --color-red: #FF453A;
-    --color-glow: rgba(10, 132, 255, 0.25);
+    /* ═══ Premium Original Command Center Dark Mode ═══ */
+    --color-background: #09090B;
+    --color-surface: rgba(255, 255, 255, 0.03);
+    --color-panel: rgba(255, 255, 255, 0.05);
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-text1: #FFFFFF;
+    --color-text2: #A1A1AA;
+    --color-text3: rgba(255, 255, 255, 0.2);
+    --color-coral: #F87171;
+    --color-coralSoft: rgba(248, 113, 113, 0.1);
+    --color-amber: #FBBF24;
+    --color-violet: #A78BFA;
+    --color-blue: #60A5FA;
+    --color-green: #34D399;
+    --color-red: #F87171;
+    --color-glow: rgba(248, 113, 113, 0.15);
   }
 
   /* Sleek thin scrollbar */

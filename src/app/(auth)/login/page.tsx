@@ -52,11 +52,11 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex flex-col pt-4">
           <Link href="/dashboard" className="w-full">
-            <Button className="w-full bg-primary hover:bg-primary/90 text-foreground font-medium">
+            <Button className="w-full bg-primary hover:bg-primary/90 text-[color:var(--color-text1)] font-medium">
               Authenticate
             </Button>
           </Link>
-          <p className="mt-4 text-xs text-center text-muted-foreground">
+          <p className="mt-4 text-xs text-center text-[color:var(--color-text2)]">
             By logging in, you agree to the Government of Karnataka's strict data usage policies and audit tracking.
           </p>
         </CardFooter>

@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} ${jetbrains.variable} font-sans min-h-screen bg-[var(--color-background)] text-foreground antialiased`}>
+      <body className={`${outfit.variable} ${jetbrains.variable} font-sans min-h-screen bg-[var(--color-background)] text-[color:var(--color-text1)] antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <TooltipProvider>
             <PageTransition>

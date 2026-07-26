@@ -8,7 +8,7 @@ export default function ProfilePage() {
     <div className="flex flex-col gap-6 max-w-4xl mx-auto w-full">
       <div className="mb-2">
         <h1 className="text-3xl font-bold tracking-tight">Officer Profile</h1>
-        <p className="text-muted-foreground mt-1">Manage your secure credentials and SCRB access levels.</p>
+        <p className="text-[color:var(--color-text2)] mt-1">Manage your secure credentials and SCRB access levels.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -37,7 +37,7 @@ export default function ProfilePage() {
               </div>
               <div>
                 <p className="text-sm font-medium">Department</p>
-                <p className="text-sm text-muted-foreground">Karnataka State Police - Cyber Division</p>
+                <p className="text-sm text-[color:var(--color-text2)]">Karnataka State Police - Cyber Division</p>
               </div>
             </div>
             
@@ -47,7 +47,7 @@ export default function ProfilePage() {
               </div>
               <div>
                 <p className="text-sm font-medium">Officer ID (KA-ID)</p>
-                <p className="text-sm text-muted-foreground font-mono">KA-POL-8492-SP</p>
+                <p className="text-sm text-[color:var(--color-text2)] font-mono">KA-POL-8492-SP</p>
               </div>
             </div>
 
@@ -57,7 +57,7 @@ export default function ProfilePage() {
               </div>
               <div>
                 <p className="text-sm font-medium">Secure Communications</p>
-                <p className="text-sm text-muted-foreground">ramesh.k@ksp.gov.in</p>
+                <p className="text-sm text-[color:var(--color-text2)]">ramesh.k@ksp.gov.in</p>
               </div>
             </div>
           </CardContent>

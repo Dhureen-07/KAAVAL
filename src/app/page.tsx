@@ -98,18 +98,18 @@ export default function LandingPage() {
         <div className="max-w-[1320px] mx-auto px-6 lg:px-10 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-[20px] flex items-center justify-center bg-gradient-to-br from-[#3B82F6] to-[#60A5FA] group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all">
-              <Shield className="w-4 h-4 text-foreground" />
+              <Shield className="w-4 h-4 text-[color:var(--color-text1)]" />
             </div>
-            <span className="text-foreground font-bold tracking-[0.14em] text-sm uppercase">Kaaval</span>
+            <span className="text-[color:var(--color-text1)] font-bold tracking-[0.14em] text-sm uppercase">Kaaval</span>
           </Link>
           <div className="hidden md:flex items-center gap-8 text-[13px] font-medium text-[#A1A1AA]">
-            <button onClick={() => scrollTo("features")} className="hover:text-foreground transition-colors">Features</button>
-            <button onClick={() => scrollTo("modules")} className="hover:text-foreground transition-colors">Modules</button>
-            <Link href="/assistant" className="hover:text-foreground transition-colors">AI Assistant</Link>
+            <button onClick={() => scrollTo("features")} className="hover:text-[color:var(--color-text1)] transition-colors">Features</button>
+            <button onClick={() => scrollTo("modules")} className="hover:text-[color:var(--color-text1)] transition-colors">Modules</button>
+            <Link href="/assistant" className="hover:text-[color:var(--color-text1)] transition-colors">AI Assistant</Link>
           </div>
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Link href="/login" className="hidden sm:flex text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">Login</Link>
+            <Link href="/login" className="hidden sm:flex text-[13px] font-medium text-[color:var(--color-text2)] hover:text-[color:var(--color-text1)] transition-colors">Login</Link>
             <Link href="/dashboard" className="h-10 px-5 rounded-[20px] text-[13px] font-semibold text-white flex items-center gap-1.5 transition-all hover:-translate-y-px bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] hover:shadow-[0_4px_24px_rgba(59,130,246,0.4)]">
               Dashboard <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -135,7 +135,7 @@ export default function LandingPage() {
             Karnataka State Police · Neural Command v3.0
           </div>
 
-          <h1 className="text-[clamp(2.8rem,7vw,5.5rem)] font-extrabold tracking-[-0.04em] leading-[1.05] text-foreground mb-6">
+          <h1 className="text-[clamp(2.8rem,7vw,5.5rem)] font-extrabold tracking-[-0.04em] leading-[1.05] text-[color:var(--color-text1)] mb-6">
             Protecting Karnataka
             <br />with{" "}
             <span className="relative inline-block">
@@ -162,7 +162,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <button onClick={() => scrollTo("stats")} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#A1A1AA] hover:text-foreground transition-colors z-10">
+        <button onClick={() => scrollTo("stats")} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#A1A1AA] hover:text-[color:var(--color-text1)] transition-colors z-10">
           <span className="text-[11px] tracking-[0.2em] uppercase font-medium">Scroll</span>
           <ChevronDown className="w-4 h-4 animate-bounce" />
         </button>
@@ -183,7 +183,7 @@ export default function LandingPage() {
                   <s.icon className="w-5 h-5" style={{ color: s.color }} />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-foreground tracking-tight">{s.value}</div>
+                  <div className="text-2xl font-bold text-[color:var(--color-text1)] tracking-tight">{s.value}</div>
                   <div className="text-[12px] font-medium text-[#A1A1AA]">{s.label}</div>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function LandingPage() {
           <R>
             <div className="max-w-2xl mb-20">
               <span className="text-[12px] font-bold tracking-[0.18em] uppercase mb-4 block" style={{ color: P.coral }}>Intelligence Platform</span>
-              <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-foreground tracking-tight leading-tight mb-5">
+              <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-[color:var(--color-text1)] tracking-tight leading-tight mb-5">
                 Your Entire Command Center,<br />One Unified Interface.
               </h2>
               <p className="text-base font-light leading-relaxed text-[#A1A1AA]">
@@ -217,7 +217,7 @@ export default function LandingPage() {
                       <BarChart3 className="w-5 h-5" style={{ color: P.coral }} />
                     </div>
                     <div>
-                      <h3 className="text-[15px] font-semibold text-foreground">Statewide Analytics</h3>
+                      <h3 className="text-[15px] font-semibold text-[color:var(--color-text1)]">Statewide Analytics</h3>
                       <p className="text-[11px] text-[#A1A1AA]">Live crime data · Auto-refreshing</p>
                     </div>
                   </div>
@@ -242,7 +242,7 @@ export default function LandingPage() {
                           <m.icon className="w-4 h-4" style={{ color: m.col }} />
                         </div>
                       </div>
-                      <div className="text-[1.6rem] font-bold text-foreground mb-1 tracking-tight">{m.v}</div>
+                      <div className="text-[1.6rem] font-bold text-[color:var(--color-text1)] mb-1 tracking-tight">{m.v}</div>
                       <div className="text-[11px] font-semibold" style={{ color: m.col }}>{m.c}</div>
                     </div>
                   ))}
@@ -251,7 +251,7 @@ export default function LandingPage() {
                 {/* Chart */}
                 <div className="p-5 rounded-[20px]" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid rgba(255,255,255,0.04)` }}>
                   <div className="flex items-center justify-between mb-6">
-                    <span className="text-[13px] font-semibold text-foreground">District Crime Distribution</span>
+                    <span className="text-[13px] font-semibold text-[color:var(--color-text1)]">District Crime Distribution</span>
                     <div className="flex items-center gap-4 text-[10px] text-[#A1A1AA]">
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{ background: P.coral }} />Property</span>
                       <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{ background: P.violet }} />Cyber</span>
@@ -275,7 +275,7 @@ export default function LandingPage() {
           <div id="modules">
             <R><div className="max-w-xl mb-14">
               <span className="text-[12px] font-bold tracking-[0.18em] uppercase mb-4 block" style={{ color: P.coral }}>Modules</span>
-              <h2 className="text-[clamp(1.5rem,3.5vw,2.4rem)] font-bold text-foreground tracking-tight leading-tight">Purpose-Built Tools for Every Operation</h2>
+              <h2 className="text-[clamp(1.5rem,3.5vw,2.4rem)] font-bold text-[color:var(--color-text1)] tracking-tight leading-tight">Purpose-Built Tools for Every Operation</h2>
             </div></R>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
@@ -293,7 +293,7 @@ export default function LandingPage() {
                       <div className="relative w-12 h-12 rounded-[20px] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300" style={{ background: `${m.color}12` }}>
                         <m.icon className="w-5 h-5" style={{ color: m.color }} />
                       </div>
-                      <h3 className="relative text-[16px] font-semibold text-foreground mb-2 group-hover:text-[#3B82F6] transition-colors duration-300">{m.title}</h3>
+                      <h3 className="relative text-[16px] font-semibold text-[color:var(--color-text1)] mb-2 group-hover:text-[#3B82F6] transition-colors duration-300">{m.title}</h3>
                       <p className="relative text-[13px] font-light leading-relaxed text-[#A1A1AA] mt-auto">{m.desc}</p>
                       <div className="relative mt-5 flex items-center gap-1.5 text-[12px] font-semibold opacity-0 group-hover:opacity-100 translate-x-[-4px] group-hover:translate-x-0 transition-all duration-300" style={{ color: P.coral }}>
                         Open Module <ArrowRight className="w-3.5 h-3.5" />
@@ -314,12 +314,12 @@ export default function LandingPage() {
         </div>
         <R>
           <div className="relative z-10 max-w-2xl mx-auto text-center space-y-7">
-            <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-foreground tracking-tight leading-tight">
+            <h2 className="text-[clamp(1.8rem,4vw,3rem)] font-bold text-[color:var(--color-text1)] tracking-tight leading-tight">
               Ready to Transform<br />Law Enforcement?
             </h2>
             <p className="text-base font-light text-[#A1A1AA]">Join 1,800+ officers using KAAVAL to protect Karnataka every day.</p>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-              <Link href="/dashboard" className="group h-14 px-8 rounded-[28px] text-foreground text-[15px] font-bold flex items-center gap-2.5 transition-all hover:-translate-y-1 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] hover:shadow-[0_8px_40px_rgba(59,130,246,0.35)]">
+              <Link href="/dashboard" className="group h-14 px-8 rounded-[28px] text-[color:var(--color-text1)] text-[15px] font-bold flex items-center gap-2.5 transition-all hover:-translate-y-1 bg-gradient-to-r from-[#3B82F6] to-[#60A5FA] hover:shadow-[0_8px_40px_rgba(59,130,246,0.35)]">
                 Enter Command Center <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link href="/login" className="h-14 px-8 rounded-[28px] text-[15px] font-medium flex items-center gap-2.5 transition-all hover:bg-white/[0.06] glass-panel">
@@ -336,7 +336,7 @@ export default function LandingPage() {
         <div className="max-w-[1320px] mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-gradient-to-br from-[#3B82F6] to-[#60A5FA]">
-              <Shield className="w-3.5 h-3.5 text-foreground" />
+              <Shield className="w-3.5 h-3.5 text-[color:var(--color-text1)]" />
             </div>
             <span className="text-[12px] font-bold tracking-[0.12em] text-[#A1A1AA] uppercase">Kaaval</span>
           </div>

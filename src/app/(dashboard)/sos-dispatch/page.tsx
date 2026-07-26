@@ -114,7 +114,7 @@ export default function SOSDispatchPage() {
               <Siren className="w-6 h-6 relative z-10 animate-pulse" style={{ color: P.red }} />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground leading-tight flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[color:var(--color-text1)] leading-tight flex items-center gap-3">
                 SOS Dispatch Center
                 <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border tracking-wide uppercase shadow-lg animate-pulse" style={{ background: `${P.red}15`, color: P.red, borderColor: `${P.red}30` }}>PCR ACTIVE</span>
               </h1>
@@ -131,13 +131,13 @@ export default function SOSDispatchPage() {
           
           <div className="max-w-md mx-auto space-y-2 relative z-10 mb-8">
             <span className="text-[11px] font-mono font-bold tracking-widest uppercase mb-2 block" style={{ color: P.red }}>// Protocol 112 //</span>
-            <h2 className="text-2xl sm:text-3xl font-black text-foreground">INSTANT SOS SIGNAL</h2>
+            <h2 className="text-2xl sm:text-3xl font-black text-[color:var(--color-text1)]">INSTANT SOS SIGNAL</h2>
             <p className="text-[13px] font-light" style={{ color: P.text2 }}>Pressing the button below instantly captures GPS coordinates and dispatches the nearest PCR van.</p>
           </div>
 
           <button
             onClick={() => triggerSOS()} disabled={triggering}
-            className="relative group w-48 h-48 mx-auto rounded-full border-4 shadow-2xl transition-all duration-300 transform active:scale-95 flex flex-col items-center justify-center gap-2 text-foreground font-black tracking-wider z-10 hover:scale-105"
+            className="relative group w-48 h-48 mx-auto rounded-full border-4 shadow-2xl transition-all duration-300 transform active:scale-95 flex flex-col items-center justify-center gap-2 text-[color:var(--color-text1)] font-black tracking-wider z-10 hover:scale-105"
             style={{ background: `linear-gradient(135deg, ${P.red}, #E11D48)`, borderColor: "rgba(255,255,255,0.2)", boxShadow: `0 0 80px ${P.red}60` }}
           >
             <Siren className="w-14 h-14 group-hover:scale-110 transition-transform animate-bounce" />
@@ -162,7 +162,7 @@ export default function SOSDispatchPage() {
       <Reveal delay={150}>
         <div className="space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-4" style={{ borderColor: P.border }}>
-            <h2 className="text-[16px] font-bold text-foreground flex items-center gap-2">
+            <h2 className="text-[16px] font-bold text-[color:var(--color-text1)] flex items-center gap-2">
               <Radio className="w-4 h-4" style={{ color: P.red }} /> Live Emergency Alerts ({alerts.length})
             </h2>
             <span className="text-[11px] font-mono font-bold tracking-wider uppercase" style={{ color: P.text3 }}>Karnataka PCR Network #112</span>
@@ -177,7 +177,7 @@ export default function SOSDispatchPage() {
                   <div className="flex items-center justify-between border-b pb-4 mb-4 relative z-10" style={{ borderColor: P.border }}>
                     <div>
                       <span className="text-[10px] font-mono font-bold uppercase tracking-widest block mb-1" style={{ color: alert.priority === 'CRITICAL' ? P.red : P.amber }}>{alert.priority} PRIORITY</span>
-                      <h3 className="text-[16px] font-extrabold text-foreground leading-tight">{alert.incident_type}</h3>
+                      <h3 className="text-[16px] font-extrabold text-[color:var(--color-text1)] leading-tight">{alert.incident_type}</h3>
                     </div>
                     <span className={`px-3 py-1.5 rounded-full font-mono text-[10px] font-bold tracking-wider uppercase shadow-lg ${alert.status === 'RESOLVED' ? '' : 'animate-pulse'}`} style={{ background: alert.status === 'RESOLVED' ? `${P.green}15` : `${P.red}15`, color: alert.status === 'RESOLVED' ? P.green : P.red, border: `1px solid ${alert.status === 'RESOLVED' ? P.green : P.red}30` }}>
                       {alert.status}
@@ -187,7 +187,7 @@ export default function SOSDispatchPage() {
                   <div className="grid grid-cols-2 gap-3 text-[12px] relative z-10 flex-1 content-start mb-5">
                     <div className="p-3.5 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                       <span className="flex items-center gap-1.5 mb-1 text-[9px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><User className="w-3 h-3" style={{ color: P.violet }} /> Caller / Patrol</span>
-                      <p className="font-bold text-foreground text-[13px] truncate">{alert.caller_name}</p>
+                      <p className="font-bold text-[color:var(--color-text1)] text-[13px] truncate">{alert.caller_name}</p>
                     </div>
                     <div className="p-3.5 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                       <span className="flex items-center gap-1.5 mb-1 text-[9px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><Phone className="w-3 h-3" style={{ color: P.blue }} /> Contact Phone</span>
@@ -206,7 +206,7 @@ export default function SOSDispatchPage() {
                     </div>
 
                     {alert.status !== 'RESOLVED' ? (
-                      <button onClick={() => handleUpdateStatus(alert.id, 'RESOLVED')} className="px-4 py-2 text-foreground font-bold rounded-[20px] text-[10px] uppercase tracking-wider transition-all hover:scale-105 shadow-lg" style={{ background: `linear-gradient(135deg, ${P.green}, #059669)` }}>
+                      <button onClick={() => handleUpdateStatus(alert.id, 'RESOLVED')} className="px-4 py-2 text-[color:var(--color-text1)] font-bold rounded-[20px] text-[10px] uppercase tracking-wider transition-all hover:scale-105 shadow-lg" style={{ background: `linear-gradient(135deg, ${P.green}, #059669)` }}>
                         Mark Resolved
                       </button>
                     ) : (

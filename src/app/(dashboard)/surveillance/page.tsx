@@ -52,7 +52,7 @@ export default function SurveillancePage() {
             <Video className="w-8 h-8 text-primary" />
             Live Surveillance Grid
           </h1>
-          <p className="text-muted-foreground mt-1">Real-time CCTV anomaly detection powered by computer vision.</p>
+          <p className="text-[color:var(--color-text2)] mt-1">Real-time CCTV anomaly detection powered by computer vision.</p>
         </div>
         <div className="px-4 py-2 rounded-full bg-destructive/10 text-destructive border border-destructive/30 text-sm font-bold flex items-center gap-2 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
           <span className="w-2.5 h-2.5 rounded-full bg-destructive animate-pulse"></span>

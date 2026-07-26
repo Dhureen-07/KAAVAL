@@ -128,7 +128,7 @@ export default function AssistantPage() {
                 <Sparkles className="w-6 h-6 relative z-10" style={{ color: P.violet }} />
               </div>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground leading-tight">Neural Interface</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[color:var(--color-text1)] leading-tight">Neural Interface</h1>
                 <p className="text-[13px] mt-1 font-light" style={{ color: P.text2 }}>RAG-powered investigative assistant linked to KAAVAL Datasets</p>
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function AssistantPage() {
                       <div className={`px-5 py-4 text-[13.5px] leading-relaxed shadow-lg
                         prose prose-invert prose-p:leading-relaxed prose-pre:bg-black/50 prose-pre:border prose-pre:border-white/10 max-w-none font-light
                         ${msg.role === 'user' 
-                          ? 'text-foreground rounded-[20px] rounded-tr-[4px]' 
+                          ? 'text-[color:var(--color-text1)] rounded-[20px] rounded-tr-[4px]' 
                           : 'text-[#E4E4E7] rounded-[20px] rounded-tl-[4px] border'}`}
                         style={msg.role === 'user' 
                           ? { background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})`, boxShadow: `0 8px 24px ${P.coral}30` }
@@ -227,7 +227,7 @@ export default function AssistantPage() {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask KAAVAL AI about suspects, patterns, or timelines..." 
-                  className="w-full rounded-[28px] pl-5 pr-28 py-4 focus:outline-none transition-all text-[13px] font-medium placeholder:text-muted-foreground opacity-80"
+                  className="w-full rounded-[28px] pl-5 pr-28 py-4 focus:outline-none transition-all text-[13px] font-medium placeholder:text-[color:var(--color-text3)]"
                   style={{ background: P.surface, border: `1px solid ${P.border}`, color: P.text1, boxShadow: "inset 0 2px 10px rgba(0,0,0,0.05)" }}
                 />
                 <div className="absolute right-2 flex items-center gap-1.5">
@@ -236,12 +236,12 @@ export default function AssistantPage() {
                     className="p-2.5 rounded-[20px] transition-colors flex items-center gap-2 group"
                     style={{ color: isListening ? P.red : P.text2, background: isListening ? `${P.red}15` : "transparent" }}
                   >
-                    <Mic className={`w-5 h-5 transition-transform ${isListening ? "animate-pulse scale-110" : "group-hover:text-foreground"}`} />
+                    <Mic className={`w-5 h-5 transition-transform ${isListening ? "animate-pulse scale-110" : "group-hover:text-[color:var(--color-text1)]"}`} />
                   </button>
                   <button 
                     onClick={handleSend}
                     disabled={isLoading || !input.trim()}
-                    className="p-2.5 rounded-[20px] text-foreground transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
+                    className="p-2.5 rounded-[20px] text-[color:var(--color-text1)] transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105"
                     style={{ background: `linear-gradient(135deg, ${P.violet}, ${P.violetDim})`, boxShadow: `0 4px 16px ${P.violet}40` }}
                   >
                     <Send className="w-5 h-5" />
@@ -269,7 +269,7 @@ export default function AssistantPage() {
                 { name: "Facial Recognition API", status: "Idle", color: P.text3 },
               ].map((node, i) => (
                 <div key={i} className="flex items-center justify-between group">
-                  <span className="text-[12px] font-medium text-foreground transition-colors group-hover:text-[#3B82F6]">{node.name}</span>
+                  <span className="text-[12px] font-medium text-[color:var(--color-text1)] transition-colors group-hover:text-[#3B82F6]">{node.name}</span>
                   <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border" style={{ color: node.color, background: `${node.color}15`, borderColor: `${node.color}30` }}>
                     {node.status}
                   </span>

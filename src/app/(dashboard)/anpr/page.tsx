@@ -121,7 +121,7 @@ export default function ANPRScannerPage() {
               <Car className="w-6 h-6 relative z-10" style={{ color: P.amber }} />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground leading-tight flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[color:var(--color-text1)] leading-tight flex items-center gap-3">
                 ANPR Network
                 <span className="text-[10px] font-mono px-2.5 py-1 rounded-full border tracking-wide uppercase shadow-lg" style={{ background: `${P.red}15`, color: P.red, borderColor: `${P.red}30` }}>LIVE 60 FPS</span>
               </h1>
@@ -138,25 +138,25 @@ export default function ANPRScannerPage() {
       {showAddForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-200" style={{ background: "rgba(10,1,24,0.85)", backdropFilter: "blur(12px)" }}>
           <form onSubmit={handleAddVehicle} className="glass-panel-heavy p-8 rounded-3xl max-w-2xl w-full space-y-5">
-            <h3 className="text-xl font-bold text-foreground flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
+            <h3 className="text-xl font-bold text-[color:var(--color-text1)] flex items-center gap-2 pb-4" style={{ borderBottom: `1px solid ${P.border}` }}>
               <ShieldAlert className="w-5 h-5" style={{ color: P.amber }} /> Flag Vehicle in Crime Watch Database
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 text-[12px]">
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Plate Number</label>
-                <input type="text" placeholder="KA-03-HA-8812" value={newVehicle.plate_number} onChange={(e) => setNewVehicle({ ...newVehicle, plate_number: e.target.value })} className="w-full p-3 rounded-[20px] font-mono uppercase outline-none text-foreground font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="KA-03-HA-8812" value={newVehicle.plate_number} onChange={(e) => setNewVehicle({ ...newVehicle, plate_number: e.target.value })} className="w-full p-3 rounded-[20px] font-mono uppercase outline-none text-[color:var(--color-text1)] font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Owner Name</label>
-                <input type="text" placeholder="Ramesh Kumar" value={newVehicle.owner_name} onChange={(e) => setNewVehicle({ ...newVehicle, owner_name: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-foreground" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="Ramesh Kumar" value={newVehicle.owner_name} onChange={(e) => setNewVehicle({ ...newVehicle, owner_name: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Make & Model</label>
-                <input type="text" placeholder="Hyundai Creta" value={newVehicle.vehicle_model} onChange={(e) => setNewVehicle({ ...newVehicle, vehicle_model: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-foreground" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
+                <input type="text" placeholder="Hyundai Creta" value={newVehicle.vehicle_model} onChange={(e) => setNewVehicle({ ...newVehicle, vehicle_model: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} required />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Flag Status</label>
-                <select value={newVehicle.status} onChange={(e) => setNewVehicle({ ...newVehicle, status: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-foreground cursor-pointer font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
+                <select value={newVehicle.status} onChange={(e) => setNewVehicle({ ...newVehicle, status: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)] cursor-pointer font-bold" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }}>
                   <option value="STOLEN" style={{ background: "#09090B", color: P.red }}>🚨 STOLEN</option>
                   <option value="WANTED" style={{ background: "#09090B", color: P.amber }}>⚠️ WANTED</option>
                   <option value="CLEAN" style={{ background: "#09090B", color: P.green }}>✅ CLEAN RECORD</option>
@@ -164,16 +164,16 @@ export default function ANPRScannerPage() {
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Crime Reference</label>
-                <input type="text" placeholder="FIR-442/2026" value={newVehicle.crime_reference} onChange={(e) => setNewVehicle({ ...newVehicle, crime_reference: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-foreground" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
+                <input type="text" placeholder="FIR-442/2026" value={newVehicle.crime_reference} onChange={(e) => setNewVehicle({ ...newVehicle, crime_reference: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
               </div>
               <div>
                 <label className="font-semibold block mb-1.5" style={{ color: P.text2 }}>Last Seen At</label>
-                <input type="text" placeholder="Silk Board Junction" value={newVehicle.last_seen_location} onChange={(e) => setNewVehicle({ ...newVehicle, last_seen_location: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-foreground" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
+                <input type="text" placeholder="Silk Board Junction" value={newVehicle.last_seen_location} onChange={(e) => setNewVehicle({ ...newVehicle, last_seen_location: e.target.value })} className="w-full p-3 rounded-[20px] outline-none text-[color:var(--color-text1)]" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${P.border}` }} />
               </div>
             </div>
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setShowAddForm(false)} className="px-5 py-2.5 rounded-[20px] text-[12px] font-semibold hover:bg-white/5 transition-all" style={{ color: P.text2 }}>Cancel</button>
-              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-foreground transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.red}, #E11D48)` }}>Register Flagged Vehicle</button>
+              <button type="submit" className="px-5 py-2.5 rounded-[20px] text-[12px] font-bold text-[color:var(--color-text1)] transition-all hover:scale-105" style={{ background: `linear-gradient(135deg, ${P.red}, #E11D48)` }}>Register Flagged Vehicle</button>
             </div>
           </form>
         </div>
@@ -188,7 +188,7 @@ export default function ANPRScannerPage() {
             <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] opacity-20 pointer-events-none" style={{ background: P.amber }} />
             
             <div className="flex items-center justify-between mb-5 relative z-10">
-              <span className="text-[12px] font-bold text-foreground flex items-center gap-2">
+              <span className="text-[12px] font-bold text-[color:var(--color-text1)] flex items-center gap-2">
                 <Camera className="w-4 h-4 animate-pulse" style={{ color: P.amber }} /> ANPR Camera Feed #04 - Silk Board Junction
               </span>
               <span className="text-[9px] font-mono font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" style={{ background: `${P.green}15`, color: P.green, border: `1px solid ${P.green}30` }}>
@@ -205,7 +205,7 @@ export default function ANPRScannerPage() {
                   <span>[ TARGET_ACQUIRED ]</span>
                   <span>CONF: 99.4%</span>
                 </div>
-                <div className="text-center font-mono font-extrabold text-2xl tracking-widest text-foreground drop-shadow-md">
+                <div className="text-center font-mono font-extrabold text-2xl tracking-widest text-[color:var(--color-text1)] drop-shadow-md">
                   KA-03-HA-8812
                 </div>
                 <div className="flex justify-between text-[9px] font-mono" style={{ color: P.text3 }}>
@@ -241,12 +241,12 @@ export default function ANPRScannerPage() {
         <div className="space-y-6 flex flex-col">
           <Reveal delay={150}>
             <div className="glass-panel p-6 rounded-3xl border space-y-4 relative overflow-hidden" style={{ borderColor: P.border, background: P.surface }}>
-              <label className="text-[13px] font-bold text-foreground flex items-center gap-2 relative z-10">
+              <label className="text-[13px] font-bold text-[color:var(--color-text1)] flex items-center gap-2 relative z-10">
                 <Search className="w-4 h-4" style={{ color: P.coral }} /> Manual Registration Lookup
               </label>
               <div className="flex flex-col sm:flex-row gap-3 relative z-10">
-                <input type="text" value={plateInput} onChange={(e) => setPlateInput(e.target.value.toUpperCase())} placeholder="Enter Plate (e.g. KA-03-HA-8812)" className="flex-1 p-3.5 rounded-[28px] text-foreground font-mono uppercase font-bold text-sm tracking-wider outline-none focus:ring-1 transition-all" style={{ background: "#09090B", border: `1px solid ${P.border}` }} />
-                <button onClick={() => handleLookup()} disabled={loading || !plateInput.trim()} className="px-6 py-3.5 rounded-[28px] text-[12px] font-bold text-foreground transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-lg whitespace-nowrap" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})`, boxShadow: `0 8px 24px ${P.coral}40` }}>
+                <input type="text" value={plateInput} onChange={(e) => setPlateInput(e.target.value.toUpperCase())} placeholder="Enter Plate (e.g. KA-03-HA-8812)" className="flex-1 p-3.5 rounded-[28px] text-[color:var(--color-text1)] font-mono uppercase font-bold text-sm tracking-wider outline-none focus:ring-1 transition-all" style={{ background: "#09090B", border: `1px solid ${P.border}` }} />
+                <button onClick={() => handleLookup()} disabled={loading || !plateInput.trim()} className="px-6 py-3.5 rounded-[28px] text-[12px] font-bold text-[color:var(--color-text1)] transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-lg whitespace-nowrap" style={{ background: `linear-gradient(135deg, ${P.coral}, ${P.coralSoft})`, boxShadow: `0 8px 24px ${P.coral}40` }}>
                   {loading ? "Searching..." : "Lookup Database"}
                 </button>
               </div>
@@ -261,7 +261,7 @@ export default function ANPRScannerPage() {
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-5 mb-5 relative z-10 gap-3" style={{ borderColor: P.border }}>
                   <div>
                     <span className="text-[10px] font-mono uppercase tracking-wider block mb-1" style={{ color: P.text3 }}>Registration Number</span>
-                    <h2 className="text-3xl font-black font-mono tracking-widest text-foreground drop-shadow-md">{result.plate_number}</h2>
+                    <h2 className="text-3xl font-black font-mono tracking-widest text-[color:var(--color-text1)] drop-shadow-md">{result.plate_number}</h2>
                   </div>
                   {result.status === "STOLEN" ? (
                     <span className="px-4 py-2 rounded-full font-mono text-[11px] font-bold flex items-center gap-2 animate-pulse shadow-lg" style={{ background: `${P.red}15`, color: P.red, border: `1px solid ${P.red}40` }}>
@@ -281,11 +281,11 @@ export default function ANPRScannerPage() {
                 <div className="grid grid-cols-2 gap-4 text-[12px] relative z-10 flex-1 content-start">
                   <div className="p-4 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                     <span className="flex items-center gap-1.5 mb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><User className="w-3.5 h-3.5" style={{ color: P.violet }} /> Registered Owner</span>
-                    <p className="font-bold text-foreground text-[14px]">{result.owner_name}</p>
+                    <p className="font-bold text-[color:var(--color-text1)] text-[14px]">{result.owner_name}</p>
                   </div>
                   <div className="p-4 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                     <span className="flex items-center gap-1.5 mb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><Car className="w-3.5 h-3.5" style={{ color: P.amber }} /> Make & Model</span>
-                    <p className="font-bold text-foreground text-[14px]">{result.vehicle_model}</p>
+                    <p className="font-bold text-[color:var(--color-text1)] text-[14px]">{result.vehicle_model}</p>
                   </div>
                   <div className="p-4 rounded-[28px] border flex flex-col justify-center" style={{ background: "rgba(0,0,0,0.2)", borderColor: P.border }}>
                     <span className="flex items-center gap-1.5 mb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: P.text2 }}><FileText className="w-3.5 h-3.5" style={{ color: P.coral }} /> Crime Reference</span>

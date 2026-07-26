@@ -32,7 +32,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs text-muted-foreground uppercase tracking-wider">Intelligence</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xs text-[color:var(--color-text2)] uppercase tracking-wider">Intelligence</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -47,7 +47,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs text-muted-foreground uppercase tracking-wider">User</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xs text-[color:var(--color-text2)] uppercase tracking-wider">User</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {userItems.map((item) => (
@@ -64,12 +64,12 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="p-4 border-t border-border">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-foreground font-bold text-sm">
+          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-[color:var(--color-text1)] font-bold text-sm">
             SP
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-medium">Officer Name</span>
-            <span className="text-xs text-muted-foreground">Superintendent</span>
+            <span className="text-xs text-[color:var(--color-text2)]">Superintendent</span>
           </div>
         </div>
       </SidebarFooter>

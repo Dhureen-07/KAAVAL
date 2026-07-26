@@ -4,7 +4,7 @@ import { OfflineIndicator } from "@/components/layout/OfflineIndicator"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden" style={{ background: "#F5F5F7" }}>
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden bg-[var(--color-background)]">
       
       {/* Ultra-clean minimalistic background (No orbs, just pure layout) */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden">
