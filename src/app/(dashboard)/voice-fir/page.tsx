@@ -88,7 +88,7 @@ export default function VoiceToFIRPage() {
   const generateFIR = async (finalTranscript: string) => {
     if (!finalTranscript.trim()) return; setIsDrafting(true)
     try {
-      const res = await fetch("http://localhost:8000/api/intelligence/draft-fir", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ transcript: finalTranscript }) });
+      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/intelligence/draft-fir", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ transcript: finalTranscript }) });
       if (!res.ok) throw new Error()
       const data = await res.json(); setDraftedFIR(data.draft)
     } catch (error) { setDraftedFIR("**Error drafting FIR.** Please ensure the backend is running.") } 

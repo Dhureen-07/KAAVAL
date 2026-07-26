@@ -100,7 +100,7 @@ export default function AssistantPage() {
     setMessages(p => [...p, userMsg]); setInput(""); setIsLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/intelligence/query", {
+      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/intelligence/query", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: userMsg.content, officer_id: "KA-1234" })
       });

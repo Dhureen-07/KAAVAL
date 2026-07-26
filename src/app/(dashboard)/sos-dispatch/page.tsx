@@ -59,7 +59,7 @@ export default function SOSDispatchPage() {
 
   const fetchAlerts = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/sos/alert")
+      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/sos/alert")
       if (res.ok) { const data = await res.json(); setAlerts(data.alerts || []) }
     } catch (e) {
       setAlerts([
@@ -83,7 +83,7 @@ export default function SOSDispatchPage() {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/api/sos/alert", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ caller_name: "Field Officer (Instant Trigger)", caller_phone: "+91 9876543210", latitude: lat, longitude: lng, address: addr, incident_type: incidentType, priority: priority }) })
+      const res = await fetch("https://kaaval-backend-yo59.onrender.com/api/sos/alert", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ caller_name: "Field Officer (Instant Trigger)", caller_phone: "+91 9876543210", latitude: lat, longitude: lng, address: addr, incident_type: incidentType, priority: priority }) })
       if (res.ok) {
         fetchAlerts()
         toast.error(`${incidentType} DISPATCHED`, { description: `Units assigned: PCR-${Math.floor(Math.random() * 900) + 100}`, duration: 6000 })
@@ -97,7 +97,7 @@ export default function SOSDispatchPage() {
   const handleUpdateStatus = async (alertId?: number, newStatus = "RESOLVED") => {
     if (!alertId) return
     try {
-      await fetch("http://localhost:8000/api/sos/alert", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ alert_id: alertId, status: newStatus }) })
+      await fetch("https://kaaval-backend-yo59.onrender.com/api/sos/alert", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ alert_id: alertId, status: newStatus }) })
       fetchAlerts()
     } catch (e) { setAlerts(alerts.map((a) => (a.id === alertId ? { ...a, status: newStatus } : a))) }
   }
